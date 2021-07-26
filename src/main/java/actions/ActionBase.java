@@ -171,6 +171,17 @@ public abstract class ActionBase {
     }
 
     /*
+     * リクエストパラメータのフラッシュメッセージをセッションスコープに移す
+     */
+    protected void moveFlush() {
+        String flush = getSessionParam(AttributeConst.FLUSH);
+        if(flush != null) {
+            setRequestParam(AttributeConst.FLUSH, flush);
+            removeSessionParam(AttributeConst.FLUSH);
+        }
+    }
+
+    /*
      * リクエストパラメータを取得し返却する　
      * @param key パラメータ名
      * @return パラメータの値

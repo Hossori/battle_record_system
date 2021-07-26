@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="<c:url value='/css/style.css' />">
     </head>
     <body>
+        <h2 id="title"><c:out value="${param.title}" /></h2>
         <div id="content">${param.content}</div>
     </body>
 </html>

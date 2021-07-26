@@ -4,5 +4,11 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
         <h2>みんなの戦績</h2>
+        <div>id : <c:out value="${user.id}" /></div>
+        <div>email : <c:out value="${user.email}" /></div>
+        <div>name : <c:out value="${user.name}" /></div>
+        <div>password : <c:out value="${user.password}" /></div>
+        <div>adminFlag : <c:out value="${user.adminFlag}" /></div>
+        <div>deleteFlag : <c:out value="${user.deleteFlag}" /></div>
     </c:param>
 </c:import>

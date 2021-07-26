@@ -8,13 +8,20 @@ public enum ForwardConst {
 
     //action
     ACT("action"),
+    ACT_AUTH("Auth"),
 
     //command
     CMD("command"),
+    CMD_LOGIN_FORM("loginForm"),
+    CMD_LOGIN("login"),
+    CMD_SIGNUP_FORM("signupForm"),
+    CMD_SIGNUP("signup"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
-    FW_TOP_INDEX("top/index");
+    FW_TOP_INDEX("top/index"),
+    FW_LOGIN("auth/login"),
+    FW_SIGNUP("auth/signup");
 
     /*
      * 文字列

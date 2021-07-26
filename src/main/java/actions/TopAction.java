@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import constants.AttributeConst;
 import constants.ForwardConst;
+import models.User;
 import services.UserService;
 
 public class TopAction extends ActionBase {
@@ -21,7 +23,8 @@ public class TopAction extends ActionBase {
     }
 
     public void index() throws ServletException, IOException {
-
+        User u = userService.getById(1);
+        setRequestParam(AttributeConst.USER, u);
         forward(ForwardConst.FW_TOP_INDEX);
     }
 
