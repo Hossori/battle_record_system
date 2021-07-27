@@ -10,6 +10,9 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">ログイン</c:param>
     <c:param name="content">
+        <c:if test="${flush != null}">
+            <div id="flush"><c:out value='${flush}' /></div>
+        </c:if>
         <form method="POST" action="<c:url value='?action=${actAuth}&command=${commLogin}' />">
             <label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label><br />
             <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}" placeholder="email@address.com"><br />
@@ -17,10 +20,9 @@
             <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label><br />
             <input type="password" name="${AttributeConst.USER_PASS.getValue()}"><br />
 
-            <input type="hidden" value="${AttributeConst.TOKEN.getValue()}">
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
+
             <button type="submit">ログイン</button>
         </form>
-
-        <a href="<c:url value='?action=${actAuth}&command=${commSignupForm}' />"><button>新規登録</button></a>
     </c:param>
 </c:import>

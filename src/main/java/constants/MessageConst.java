@@ -6,9 +6,11 @@ package constants;
 public enum MessageConst {
 
     //認証
-    S_LOGINED("ログインしました。"),
     E_LOGINED("ログインに失敗しました。"),
-    S_LOGOUT("ログアウトしました。");
+    S_LOGOUT("ログアウトしました。"),
+    E_NO_USERNAME("ユーザー名を入力してください。"),
+    E_NO_EMAIL("メールアドレスを入力してください。"),
+    E_NO_PASS("パスワードを入力してください。");
 
     /*
      * 文字列

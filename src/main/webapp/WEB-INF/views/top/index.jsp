@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
+    <c:param name="title">みんなの戦績</c:param>
     <c:param name="content">
-        <h2>みんなの戦績</h2>
         <div>id : <c:out value="${user.id}" /></div>
         <div>email : <c:out value="${user.email}" /></div>
         <div>name : <c:out value="${user.name}" /></div>

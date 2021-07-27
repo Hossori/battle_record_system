@@ -62,22 +62,12 @@ public class UserService extends ServiceBase {
     }
 
     /*
-     * ログイン認証 メアド、パスワードからデータが取得できるかどうかで判断し返却する
-     * @param email, plainPass, pepper
-     * @return 成功:true 失敗:false
+     * ユーザーの新規登録
+     * @param u ユーザーエンティティ
      */
-    public boolean validateLogin(String email, String plainPass, String pepper) {
-
-        if(email != null && !email.equals("")
-           && plainPass != null && !plainPass.equals("")) {
-
-            User u = getByEmailAndPass(email, plainPass, pepper);
-
-            if(u != null && u.getId() != null) { //データが取得できた場合
-                return true;
-            }
-        }
-
-        return false;
+    public void create(User u) {
+        em.getTransaction().begin();
+        em.persist(u);
+        em.getTransaction().commit();
     }
 }

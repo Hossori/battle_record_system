@@ -4,3 +4,12 @@
     font-size:36px;
     margin-bottom: 15px;
 }
+
+#flush {
+    display:inline-block;
+    width: auto;
+    font-size:18px;
+    padding:12px 24px;
+    border:1px solid;
+    border-radius:4px;
+}

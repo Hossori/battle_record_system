@@ -23,7 +23,7 @@ public class TopAction extends ActionBase {
     }
 
     public void index() throws ServletException, IOException {
-        User u = userService.getById(1);
+        User u = getSessionParam(AttributeConst.LOGIN_USER);
         setRequestParam(AttributeConst.USER, u);
         forward(ForwardConst.FW_TOP_INDEX);
     }

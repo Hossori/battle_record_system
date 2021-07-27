@@ -9,6 +9,13 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">新規登録</c:param>
     <c:param name="content">
+        <c:if test="${errors != null}">
+            <div id="flush">
+                <c:forEach var="error" items="${errors}">
+                   <c:out value="${error}" /><br/>
+                </c:forEach>
+            </div>
+        </c:if>
         <form method="POST" action="<c:url value='?action=${actAuth}&command=${commSignup}' />">
             <label for="${AttributeConst.USER_NAME.getValue()}">ユーザー名</label><br />
             <input type="text" name="${AttributeConst.USER_NAME.getValue()}"><br />
@@ -19,7 +26,8 @@
             <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label><br />
             <input type="password" name="${AttributeConst.USER_PASS.getValue()}"><br />
 
-            <input type="hidden" value="${AttributeConst.TOKEN.getValue()}">
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
+
             <button type="submit">登録</button>
         </form>
     </c:param>

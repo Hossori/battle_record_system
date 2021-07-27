@@ -7,6 +7,8 @@ public enum AttributeConst {
 
     //フラッシュメッセージ
     FLUSH("flush"),
+    //エラーメッセージ
+    ERRORS("errors"),
 
     //一覧画面共通
     MAX_ROW("maxRow"),
@@ -15,6 +17,9 @@ public enum AttributeConst {
     //入力フォーム共通
     TOKEN("_token"),
     ERR("errors"),
+
+    //ログイン中のユーザー
+    LOGIN_USER("login_user"),
 
     //ユーザー
     USER("user"),

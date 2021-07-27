@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -177,6 +178,14 @@ public abstract class ActionBase {
         String flush = getSessionParam(AttributeConst.FLUSH);
         if(flush != null) {
             setRequestParam(AttributeConst.FLUSH, flush);
+            removeSessionParam(AttributeConst.FLUSH);
+        }
+    }
+
+    protected void moveErrors() {
+        List<String> errors = getSessionParam(AttributeConst.ERRORS);
+        if(errors != null && 0 < errors.size()) {
+            setRequestParam(AttributeConst.FLUSH, errors);
             removeSessionParam(AttributeConst.FLUSH);
         }
     }
