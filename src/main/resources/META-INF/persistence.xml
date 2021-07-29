@@ -3,6 +3,8 @@
 	<persistence-unit name="battle_record_system" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>models.User</class>
+		<class>models.Game</class>
+		<class>models.Mode</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/battle_record_system?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

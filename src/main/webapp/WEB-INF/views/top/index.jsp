@@ -10,5 +10,23 @@
         <div>password : <c:out value="${user.password}" /></div>
         <div>adminFlag : <c:out value="${user.adminFlag}" /></div>
         <div>deleteFlag : <c:out value="${user.deleteFlag}" /></div>
+
+        <select id="game">
+            <option>1</option>
+            <option>2</option>
+        </select>
+
+        <script>
+        $(function() {
+            //セレクトボックスの値が変わったとき
+            $("#game").change(
+                function() {
+                    var data = $.get("battle_record_system/?action=Top&command=i");
+                    var option=$("<option>").text(data);
+                    $("#game").append(option);
+                }
+            );
+        });
+        </script>
     </c:param>
 </c:import>

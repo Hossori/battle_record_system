@@ -51,7 +51,7 @@ public class UserService extends ServiceBase {
      * @return 存否
      */
     public boolean isExistEmail(String email) {
-        long count = em.createNamedQuery(JpaConst.Q_USER_COUNT_BY_EMAIL, long.class)
+        long count = em.createNamedQuery(JpaConst.Q_USER_COUNT_BY_EMAIL, Long.class)
                                         .setParameter(JpaConst.JPQL_PARAM_EMAIL, email)
                                         .getSingleResult();
         if(count == 0) {

@@ -28,4 +28,8 @@ public class TopAction extends ActionBase {
         forward(ForwardConst.FW_TOP_INDEX);
     }
 
+    public String i() throws ServletException, IOException {
+        return "data";
+    }
+
 }

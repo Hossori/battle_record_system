@@ -29,7 +29,15 @@ public enum AttributeConst {
     USER_PASS("password"),
     USER_INTRODUCTION("introduction"),
     USER_ADMIN_FLAG("admin_flag"),
-    USER_DELETE_FLAG("delete_flag");
+    USER_DELETE_FLAG("delete_flag"),
+
+    //ゲーム
+    GAMES("games"),
+    GAME_COUNT("game_count"),
+    GAME_NAME("name"),
+
+    //モード
+    MODE("mode");
 
     //文字列
     private final String text;

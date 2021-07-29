@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
+import constants.JpaConst;
 import constants.PropertyConst;
+import models.User;
 
 /*
  * 各Actionの親クラス。共通処理を行う。
@@ -60,21 +63,36 @@ public abstract class ActionBase {
                 | IllegalArgumentException | InvocationTargetException | NullPointerException e) {
             //commandの値が不正で実行できない場合、エラー画面を呼び出し
             System.err.println("ActionBaseでエラーをキャッチ");
-            System.err.println(e);
             e.printStackTrace();
             forward(ForwardConst.FW_ERR_UNKNOWN);
         }
     }
 
     /*
-     * 指定されたjspの呼び出しを行う
-     * @param target 遷移先jsp画面のファイル名（拡張子を除く）
+     * フォーワードでjspを呼び出す
+     * @param target 遷移先アドレス（拡張子を除く）
      * @throws ServletException, IOException
      */
     protected void forward(ForwardConst target) throws ServletException, IOException {
 
         //jspファイルの相対パスでリクエストディスパッチャーオブジェクトを作成
         String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
+        RequestDispatcher rd = request.getRequestDispatcher(forward);
+
+        //jspファイルの呼び出し
+        rd.forward(request, response);
+    }
+
+    /*
+     * フォーワードでServletを呼び出す
+     * @param action, command
+     * @throws ServletException, IOException
+     */
+    protected void forward(ForwardConst action, ForwardConst command) throws ServletException, IOException {
+
+        //リクエストディスパッチャーオブジェクトを作成
+        String forward = request.getContextPath() + "/?action=" + action.getValue()
+                                                  + "&command=" + command.getValue();
         RequestDispatcher rd = request.getRequestDispatcher(forward);
 
         //jspファイルの呼び出し
@@ -134,7 +152,7 @@ public abstract class ActionBase {
      */
     protected int getPage() {
         int page;
-        page = toNumber(request.getParameter(AttributeConst.PAGE.getValue()));
+        page = toNumber(getRequestParam(AttributeConst.PAGE));
         if(page == Integer.MIN_VALUE) {
             page = 1;
         }
@@ -185,8 +203,20 @@ public abstract class ActionBase {
     protected void moveErrors() {
         List<String> errors = getSessionParam(AttributeConst.ERRORS);
         if(errors != null && 0 < errors.size()) {
-            setRequestParam(AttributeConst.FLUSH, errors);
-            removeSessionParam(AttributeConst.FLUSH);
+            setRequestParam(AttributeConst.ERRORS, errors);
+            removeSessionParam(AttributeConst.ERRORS);
+        }
+    }
+
+    protected boolean checkAdmin() throws ServletException, IOException {
+        User loginUser = getSessionParam(AttributeConst.LOGIN_USER);
+
+        if(loginUser != null
+                && loginUser.getAdminFlag() == JpaConst.USER_ADMIN_FLAG_TRUE) {
+            return true;
+        } else {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return false;
         }
     }
 
@@ -197,6 +227,20 @@ public abstract class ActionBase {
      */
     protected String getRequestParam(AttributeConst key) {
         return request.getParameter(key.getValue());
+    }
+
+    /*
+     * リクエストパラメータを配列で取得し、リストに変換して返却する
+     * @param key パラメータ名
+     * @return パラメータの値のリスト
+     */
+    protected List<String> getRequestParamValues(AttributeConst key) {
+        String[] arr = request.getParameterValues(key.getValue());
+        if(arr != null) {
+            return Arrays.asList(arr);
+        } else {
+            return null;
+        }
     }
 
     /*

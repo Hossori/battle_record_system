@@ -4,24 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constants.MessageConst;
+import services.UserService;
 
 public class UserValidator {
+    private static UserService service;
 
-    //ユーザー情報更新用
-    public static List<String> validate(String email, String name) {
+    //ログイン
+    public static List<String> validate(String email, String plainPass) {
         List<String> errors = new ArrayList<>();
 
-        validateEmail(errors, email);
-        validateName(errors, name);
+        validateEmail(errors, email, false);
+        validatePass(errors, plainPass);
 
         return errors;
     }
 
-    //新規登録用
+    //新規登録
     public static List<String> validate(String email, String name, String plainPass) {
         List<String> errors = new ArrayList<>();
+        service = new UserService();
 
-        validateEmail(errors, email);
+        validateEmail(errors, email, true);
         validateName(errors, name);
         validatePass(errors, plainPass);
 
@@ -29,9 +32,15 @@ public class UserValidator {
     }
 
     //メアドの入力チェック
-    private static void validateEmail(List<String> errors, String email) {
+    private static void validateEmail(List<String> errors, String email, boolean chkDuplicate) {
         if(email == null || email.equals("")) {
             errors.add(MessageConst.E_NO_EMAIL.getMessage());
+            return;
+        }
+        if(chkDuplicate) {
+            if(service.isExistEmail(email)) {
+                errors.add(MessageConst.E_EXIST_EMAIL.getMessage());
+            }
         }
     }
     //ユーザー名の入力チェック

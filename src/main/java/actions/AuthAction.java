@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -29,14 +30,22 @@ public class AuthAction extends ActionBase {
 
     public void loginForm() throws ServletException, IOException {
         setRequestParam(AttributeConst.TOKEN, getTokenId());
+        //エラーによる再表示の際に入力情報を引き継ぐ
+        setRequestParam(AttributeConst.USER_EMAIL, getRequestParam(AttributeConst.USER_EMAIL));
         moveFlush();
+        moveErrors();
+
         forward(ForwardConst.FW_LOGIN);
     }
 
     public void signupForm() throws ServletException, IOException {
         setRequestParam(AttributeConst.TOKEN, getTokenId());
-        moveFlush();
+        //エラーによる再表示の際に入力情報を引き継ぐ
+        setRequestParam(AttributeConst.USER_EMAIL, getRequestParam(AttributeConst.USER_EMAIL));
+        setRequestParam(AttributeConst.USER_NAME, getRequestParam(AttributeConst.USER_NAME));
+
         moveErrors();
+
         forward(ForwardConst.FW_SIGNUP);
     }
 
@@ -48,8 +57,14 @@ public class AuthAction extends ActionBase {
         User u = userService.getByEmailAndPass(email, plainPass, pepper);
 
         if(u == null) {
-            setSessionParam(AttributeConst.FLUSH, MessageConst.E_LOGINED.getMessage());
-            redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_LOGIN_FORM);
+            List<String> errors = new ArrayList<>();
+            errors.add(MessageConst.E_LOGINED.getMessage());
+            setSessionParam(AttributeConst.ERRORS, errors);
+
+            //forwardで入力情報を引き継ぐ
+            setRequestParam(AttributeConst.USER_EMAIL, email);
+            forward(ForwardConst.ACT_AUTH, ForwardConst.CMD_LOGIN_FORM);
+
             return;
         } else {
             if(checkToken()) {
@@ -65,14 +80,15 @@ public class AuthAction extends ActionBase {
         String plainPass = getRequestParam(AttributeConst.USER_PASS);
         String pepper = getContextParam(PropertyConst.PEPPER);
 
-        if(email == null || email.equals("")
-           || name == null || name.equals("")
-           || plainPass == null || plainPass.equals("")) {
+        List<String> errors = UserValidator.validate(email, name, plainPass);
+        setSessionParam(AttributeConst.ERRORS, errors);
 
-            List<String> errors = UserValidator.validate(email, name, plainPass);
-            setSessionParam(AttributeConst.ERRORS, errors);
+        if(0 < errors.size()) {
+            //forwardで入力情報を引き継ぐ
+            setRequestParam(AttributeConst.USER_EMAIL, email);
+            setRequestParam(AttributeConst.USER_NAME, name);
+            forward(ForwardConst.ACT_AUTH, ForwardConst.CMD_SIGNUP_FORM);
 
-            redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SIGNUP_FORM);
             return;
         }
 
