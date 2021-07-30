@@ -40,7 +40,7 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id; // id
 
-    @Column(name=JpaConst.USER_COL_EMAIL, nullable=false, unique=true)
+    @Column(name=JpaConst.USER_COL_EMAIL, nullable=false)
     private String email; //メールアドレス
 
     @Column(name=JpaConst.USER_COL_NAME, nullable=false)
