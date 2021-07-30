@@ -5,6 +5,7 @@
 
 <c:set var="actGame" value="${ForwardConst.ACT_GAME.getValue()}" />
 <c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
+<c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">ゲーム一覧</c:param>
@@ -39,7 +40,7 @@
                        </c:forEach>
                    </td>
                    <td class="game_edit">
-                       <a href="#">編集する</a>
+                       <a href="<c:out value='?action=${actGame}&command=${commEdit}&game_id=${game.id}' />">編集する</a>
                    </td>
                </tr>
             </c:forEach>

@@ -92,4 +92,25 @@ public class GameAction extends ActionBase {
             redirect(ForwardConst.ACT_GAME, ForwardConst.CMD_INDEX);
         }
     }
+
+    public void edit() throws ServletException, IOException {
+        if(checkAdmin()) {
+
+            Game g = service.getById(toNumber(getRequestParam(AttributeConst.GAME_ID)));
+            // gameの取得に成功し、デリートフラグがfalseのとき
+            if(g != null && g.getDeleteFlag() == JpaConst.GAME_DELETE_FLAG_FALSE) {
+
+                setRequestParam(AttributeConst.GAME, g);
+                setRequestParam(AttributeConst.TOKEN, getTokenId());
+
+                moveFlush();
+                moveErrors();
+
+                forward(ForwardConst.FW_GAME_EDIT);
+            } else {
+
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+            }
+        }
+    }
 }

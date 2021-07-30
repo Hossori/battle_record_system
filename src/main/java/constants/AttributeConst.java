@@ -23,21 +23,25 @@ public enum AttributeConst {
 
     //ユーザー
     USER("user"),
-    USER_ID("id"),
-    USER_EMAIL("email"),
-    USER_NAME("name"),
-    USER_PASS("password"),
-    USER_INTRODUCTION("introduction"),
-    USER_ADMIN_FLAG("admin_flag"),
-    USER_DELETE_FLAG("delete_flag"),
+    USER_ID("user_id"),
+    USER_EMAIL("user_email"),
+    USER_NAME("user_name"),
+    USER_PASS("user_password"),
+    USER_INTRODUCTION("user_introduction"),
+    USER_ADMIN_FLAG("user_admin_flag"),
+    USER_DELETE_FLAG("user_delete_flag"),
 
     //ゲーム
+    GAME("game"),
     GAMES("games"),
     GAME_COUNT("game_count"),
-    GAME_NAME("name"),
+    GAME_ID("game_id"),
+    GAME_NAME("game_name"),
 
     //モード
-    MODE("mode");
+    MODE("mode"),
+    MODE_ID("mode_id"),
+    MODE_NAME("mode_name");
 
     //文字列
     private final String text;

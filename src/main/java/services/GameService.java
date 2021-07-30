@@ -7,6 +7,10 @@ import models.Game;
 
 public class GameService extends ServiceBase {
 
+    public Game getById(int id) {
+        return em.find(Game.class, id);
+    }
+
     public List<Game> getPerPage(int page) {
         List<Game> games = em.createNamedQuery(JpaConst.Q_GAME_GET_ALL, Game.class)
                                               .setFirstResult(JpaConst.ROW_PER_PAGE * (page-1))

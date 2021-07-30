@@ -10,6 +10,7 @@ public enum ForwardConst {
     ACT("action"),
     ACT_AUTH("Auth"),
     ACT_GAME("Game"),
+    ACT_MODE("Mode"),
 
     //command
     CMD("command"),
@@ -19,13 +20,17 @@ public enum ForwardConst {
     CMD_SIGNUP("signup"),
     CMD_INDEX("index"),
     CMD_CREATE("create"),
+    CMD_EDIT("edit"),
+    CMD_UPDATE("update"),
+    CMD_DESTROY("destroy"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("top/index"),
     FW_LOGIN("auth/login"),
     FW_SIGNUP("auth/signup"),
-    FW_GAME_INDEX("games/index");
+    FW_GAME_INDEX("games/index"),
+    FW_GAME_EDIT("games/edit");
 
     /*
      * 文字列

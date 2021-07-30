@@ -12,10 +12,10 @@
         <form method="POST" action="<c:url value='?action=${actAuth}&command=${commSignup}' />">
             <label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label><br />
             <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}"
-                    value="${email}" placeholder="email@address.com"><br />
+                    value="${user_email}" placeholder="email@address.com"><br />
 
             <label for="${AttributeConst.USER_NAME.getValue()}">ユーザー名</label><br />
-            <input type="text" name="${AttributeConst.USER_NAME.getValue()}" value="${name}"><br />
+            <input type="text" name="${AttributeConst.USER_NAME.getValue()}" value="${user_name}"><br />
 
             <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label><br />
             <input type="password" name="${AttributeConst.USER_PASS.getValue()}"><br />
