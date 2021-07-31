@@ -14,7 +14,13 @@ public enum MessageConst {
     E_NO_PASS("パスワードを入力してください。"),
     S_GAME_REGISTER("ゲームを登録しました。"),
     E_NO_GAMENAME("ゲーム名を入力してください。"),
-    E_EXIST_GAMENAME("登録済みのゲームです。");
+    E_NO_MOD_GAMENAME("変更するゲーム名を入力してください。"),
+    E_EXIST_GAMENAME("登録済みのゲームです。"),
+    S_GAME_UPDATE("ゲームを更新しました。"),
+    S_GAME_DESTROY("ゲームを削除しました。"),
+    S_MODE_CREATE("モードを登録しました。"),
+    E_NO_MODENAME("モード名を入力してください。"),
+    S_MODE_DESTROY("モードを削除しました。");
 
     /*
      * 文字列

@@ -36,7 +36,9 @@
                    <td class="game_name"><c:out value="${game.name}" /></td>
                    <td class="game_mode_list">
                        <c:forEach var="mode" items="${game.modeList}">
-                           <c:out value="${mode.name}" /><br />
+                           <c:if test="${mode.deleteFlag == 0}">
+                                <c:out value="${mode.name}" /><br />
+                            </c:if>
                        </c:forEach>
                    </td>
                    <td class="game_edit">

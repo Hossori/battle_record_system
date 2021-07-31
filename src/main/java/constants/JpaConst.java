@@ -47,7 +47,7 @@ public interface JpaConst {
     String MODE_COL_NAME = "name";
     String MODE_COL_DELETE_FLAG = "delete_flag";
 
-    //gamesの論理削除フラグ
+    //modesの論理削除フラグ
     int MODE_DELETE_FLAG_FALSE = 0;
     int MODE_DELETE_FLAG_TRUE = 1;
 

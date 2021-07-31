@@ -9,13 +9,16 @@ public enum ForwardConst {
     //action
     ACT("action"),
     ACT_AUTH("Auth"),
+    ACT_TOP("Top"),
     ACT_GAME("Game"),
     ACT_MODE("Mode"),
+    ACT_RECORD("Record"),
 
     //command
     CMD("command"),
     CMD_LOGIN_FORM("loginForm"),
     CMD_LOGIN("login"),
+    CMD_LOGOUT("logout"),
     CMD_SIGNUP_FORM("signupForm"),
     CMD_SIGNUP("signup"),
     CMD_INDEX("index"),

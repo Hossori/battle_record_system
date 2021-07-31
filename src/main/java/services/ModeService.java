@@ -1,24 +1,23 @@
 package services;
 
 import constants.JpaConst;
-import models.Game;
 import models.Mode;
 
 public class ModeService extends ServiceBase {
 
-    public void create(Game g, String name) {
-        Mode m = new Mode(
-                null,
-                g,
-                name,
-                JpaConst.MODE_DELETE_FLAG_FALSE
-                );
-        create(m);
+    public Mode getById(int id) {
+        return em.find(Mode.class, id);
     }
 
-    private void create(Mode m) {
+    public void create(Mode m) {
         em.getTransaction().begin();
         em.persist(m);
+        em.getTransaction().commit();
+    }
+
+    public void destroy(Mode m) {
+        em.getTransaction().begin();
+        m.setDeleteFlag(JpaConst.MODE_DELETE_FLAG_TRUE);
         em.getTransaction().commit();
     }
 }

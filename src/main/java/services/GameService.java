@@ -41,4 +41,16 @@ public class GameService extends ServiceBase {
             return true;
         }
     }
+
+    public void update(Game g, String name) {
+        em.getTransaction().begin();
+        g.setName(name);
+        em.getTransaction().commit();
+    }
+
+    public void destroy(Game g) {
+        em.getTransaction().begin();
+        g.setDeleteFlag(JpaConst.GAME_DELETE_FLAG_TRUE);
+        em.getTransaction().commit();
+    }
 }

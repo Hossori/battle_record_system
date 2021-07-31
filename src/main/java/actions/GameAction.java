@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
 import models.Game;
+import models.Mode;
 import models.validators.GameValidator;
 import services.GameService;
 import services.ModeService;
@@ -33,7 +35,6 @@ public class GameAction extends ActionBase {
     }
 
     public void index() throws ServletException, IOException {
-
         if(checkAdmin()) {
             int page = getPage();
             List<Game> games = service.getPerPage(page);
@@ -80,7 +81,13 @@ public class GameAction extends ActionBase {
                 if(modeNames != null && 0 < modeNames.size()) {
                     for(String modeName:modeNames) {
                         if(modeName != null && !modeName.equals("")) {
-                            modeService.create(g, modeName);
+                            Mode m = new Mode(
+                                        null,
+                                        g,
+                                        modeName,
+                                        JpaConst.MODE_DELETE_FLAG_FALSE
+                                    );
+                            modeService.create(m);
                         }
                     }
                 }
@@ -107,6 +114,64 @@ public class GameAction extends ActionBase {
                 moveErrors();
 
                 forward(ForwardConst.FW_GAME_EDIT);
+            } else {
+
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+            }
+        }
+    }
+
+    public void update() throws ServletException, IOException {
+        if(checkAdmin() && checkToken()) {
+
+            Game g = service.getById(toNumber(getRequestParam(AttributeConst.GAME_ID)));
+            setRequestParam(AttributeConst.GAME_ID, g.getId()); //forwardでeditに戻るため
+            if(g != null && g.getDeleteFlag() == JpaConst.GAME_DELETE_FLAG_FALSE) {
+
+                String name = getRequestParam(AttributeConst.GAME_NAME);
+                List<String> errors = new ArrayList<>();
+                if(name != null && name.equals("")) { //ゲーム名空欄
+
+                    errors.add(MessageConst.E_NO_GAMENAME.getMessage());
+                    setSessionParam(AttributeConst.ERRORS, errors);
+                } else if(name.equals(g.getName())) { //ゲーム名に変更なし
+
+                    errors.add(MessageConst.E_NO_MOD_GAMENAME.getMessage());
+                    setSessionParam(AttributeConst.ERRORS, errors);
+                } else {
+
+                    service.update(g, name);
+                    setSessionParam(AttributeConst.FLUSH, MessageConst.S_GAME_UPDATE.getMessage());
+                }
+
+                forward(ForwardConst.ACT_GAME, ForwardConst.CMD_EDIT);
+            } else { //ゲームを取得できないあるいは削除済みの場合
+
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+            }
+        }
+    }
+
+    public void destroy() throws ServletException, IOException {
+        if(checkAdmin() && checkToken()) {
+
+            Game g = service.getById(toNumber(getRequestParam(AttributeConst.GAME_ID)));
+            if(g != null && g.getDeleteFlag() == JpaConst.GAME_DELETE_FLAG_FALSE) {
+
+                service.destroy(g);
+                for(Mode m:g.getModeList()) {
+                    //modeのエンティティを取得
+                    //(modeListにcascadeを指定していないため、
+                    // listから取り出したままのエンティティには変更を加えられない)
+                    Mode mode = modeService.getById(m.getId());
+                    modeService.destroy(mode);
+                }
+
+                setSessionParam(AttributeConst.FLUSH, MessageConst.S_GAME_DESTROY.getMessage());
+
+                //ゲーム一覧にリダイレクト
+                redirect(ForwardConst.ACT_GAME, ForwardConst.CMD_INDEX);
+
             } else {
 
                 forward(ForwardConst.FW_ERR_UNKNOWN);
