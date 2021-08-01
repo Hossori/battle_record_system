@@ -16,7 +16,7 @@
 
             <div>モード</div>
             <div id="mode_list">
-                <input type="text" name="${AttributeConst.MODE.getValue()}"><br />
+                <input type="text" name="${AttributeConst.MODE_NAME.getValue()}"><br />
             </div>
             <a href="#" id="add_mode">モードを追加</a>
 

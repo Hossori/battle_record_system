@@ -77,7 +77,7 @@ public class GameAction extends ActionBase {
                 setSessionParam(AttributeConst.FLUSH, MessageConst.S_GAME_REGISTER.getMessage());
 
                 //modeのcreate
-                List<String> modeNames = getRequestParamValues(AttributeConst.MODE);
+                List<String> modeNames = getRequestParamValues(AttributeConst.MODE_NAME);
                 if(modeNames != null && 0 < modeNames.size()) {
                     for(String modeName:modeNames) {
                         if(modeName != null && !modeName.equals("")) {

@@ -39,7 +39,7 @@ public class ModeAction extends ActionBase {
             setRequestParam(AttributeConst.GAME_ID, g.getId()); //forwardでedit画面に戻るため
             if(g != null && g.getDeleteFlag() == JpaConst.MODE_DELETE_FLAG_FALSE) {
                 String name = getRequestParam(AttributeConst.MODE_NAME);
-                if(name != null && name.equals("")) {
+                if(name != null && !name.equals("")) {
 
                     Mode m = new Mode(
                             null,
