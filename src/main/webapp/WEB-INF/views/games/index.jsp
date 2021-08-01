@@ -12,7 +12,7 @@
     <c:param name="title">ゲーム一覧</c:param>
     <c:param name="content">
         <form name="game" method="POST" action="<c:url value='?action=${actGame}&command=${commCrt}' />">
-            <label for="${AttributeConst.GAME_NAME.getValue()}">ゲーム名</label>
+            <label for="${AttributeConst.GAME_NAME.getValue()}">ゲーム</label><br />
             <input type="text" name="${AttributeConst.GAME_NAME.getValue()}">
 
             <div>モード</div>
@@ -28,7 +28,7 @@
 
         <table id="game_table">
             <tr>
-               <th class="game_name">ゲーム名</th>
+               <th class="game_name">ゲーム</th>
                <th class="game_mode_list">モード</th>
                <th class="game_edit">編集</th>
             </tr>
@@ -50,7 +50,7 @@
         </table>
 
         <div class="pagenation">
-            全 <c:out value="${game_count}" /> 件
+            全 <c:out value="${game_count}" /> 件<br />
             <c:forEach var="i" begin="1" end="${(game_count-1)/maxRow+1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}"><c:out value="${i}" /></c:when>
@@ -65,7 +65,7 @@
         $(function() {
             $('#add_mode').click(
                 function() {
-                    $('#mode_list').append('<input type="text" name="${AttributeConst.MODE.getValue()}"><br />');
+                    $('#mode_list').append('<input type="text" name="${AttributeConst.MODE_NAME.getValue()}"><br />');
                 }
             );
         });

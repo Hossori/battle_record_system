@@ -15,6 +15,7 @@ public interface JpaConst {
     String TABLE_USER = "users";
     String TABLE_GAME = "games";
     String TABLE_MODE = "modes";
+    String TABLE_RESULT = "results";
 
     //usersテーブルのカラム
     String USER_COL_ID = "id";
@@ -51,15 +52,28 @@ public interface JpaConst {
     int MODE_DELETE_FLAG_FALSE = 0;
     int MODE_DELETE_FLAG_TRUE = 1;
 
+    //resultsテーブルのカラム
+    String RESULT_COL_ID = "id";
+    String RESULT_COL_DATE = "date";
+    String RESULT_COL_USER = "user_id";
+    String RESULT_COL_GAME = "game_id";
+    String RESULT_COL_MODE = "mode_id";
+    String RESULT_COL_WIN_OR_LOSE = "win_or_lose";
+    String RESULT_COL_POINT = "point";
+    String RESULT_COL_MEMO = "memo";
+
     //エンティティ
     String ENTITY_USER = "User";
     String ENTITY_GAME = "Game";
     String ENTITY_MODE = "Mode";
+    String ENTITY_RESULT = "Result";
 
     //JPQLパラメータ
     String JPQL_PARAM_EMAIL = "email";
     String JPQL_PARAM_PASS = "password";
     String JPQL_PARAM_GAME_NAME = "game_name";
+    String JPQL_PARAM_MODE_NAME = "mode_name";
+    String JPQL_PARAM_USER = "user";
 
     //JPQL
     //メアドとパスワードで未削除のユーザーを検索する
@@ -83,4 +97,12 @@ public interface JpaConst {
     String Q_GAME_COUNT_BY_NAME = ENTITY_GAME + ".countByName";
     String Q_GAME_COUNT_BY_NAME_DEF = "SELECT COUNT(g) FROM Game AS g WHERE g.name = :" + JPQL_PARAM_GAME_NAME
                                                                       + " AND g.deleteFlag = " + GAME_DELETE_FLAG_FALSE;
+
+    //ユーザー・ゲーム・モードを指定し、戦績を日時の新しい順で取得
+    String Q_RESULT_GET_BY_USER_AND_GAME_AND_MODE = ENTITY_RESULT + ".getByUserAndGameAndMode";
+    String Q_RESULT_GET_BY_USER_AND_GAME_AND_MODE_DEF = 
+        "SELECT r FROM Result AS r WHERE r.user = :" + JPQL_PARAM_USER
+                               + " AND r.game.name LIKE :" + JPQL_PARAM_GAME_NAME
+                               + " AND r.mode.name LIKE :" + JPQL_PARAM_MODE_NAME
+                               + " ORDER BY r.date DESC";
 }

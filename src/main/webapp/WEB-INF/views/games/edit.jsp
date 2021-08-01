@@ -15,7 +15,7 @@
     <c:param name="content">
         <!-- ゲーム名の変更 -->
         <form name="update_game" method="POST" action="<c:url value='?action=${actGame}&command=${commUpd}' />">
-            <label for="${AttributeConst.GAME_NAME.getValue()}">ゲーム名</label>
+            <label for="${AttributeConst.GAME_NAME.getValue()}">ゲーム</label><br />
             <input type="text" name="${AttributeConst.GAME_NAME.getValue()}" value="${game.name}">
 
             <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
