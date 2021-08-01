@@ -9,7 +9,7 @@ public interface JpaConst {
     String PERSISTENCE_UNIT_NAME = "battle_record_system";
 
     //データ取得件数の最大値
-    int ROW_PER_PAGE = 15; //1ページに表示するレコードの数
+    int ROW_PER_PAGE = 10; //1ページに表示するレコードの数
 
     //テーブル
     String TABLE_USER = "users";

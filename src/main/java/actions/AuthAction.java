@@ -112,4 +112,10 @@ public class AuthAction extends ActionBase {
             //redirect();
         }
     }
+
+    public void logout() throws ServletException, IOException {
+        removeSessionParam(AttributeConst.LOGIN_USER);
+
+        redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
+    }
 }

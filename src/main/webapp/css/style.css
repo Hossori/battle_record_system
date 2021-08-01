@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.clear {
+    clear:both;
+}
+
 #title {
     font-size:36px;
     margin-bottom: 15px;
@@ -12,4 +16,54 @@
     padding:12px 24px;
     border:1px solid;
     border-radius:4px;
+}
+
+/* header */
+header {
+    background-color:darkblue;
+    opacity:0.8;
+    height:110px;
+    width:100%;
+    position:fixed;
+}
+
+div.header-logo a {
+    font-size:54px;
+    margin:12px;
+    text-decoration:none;
+    color:yellow;
+}
+
+div.header-menu a {
+    font-size:18px;
+    margin:8px;
+    text-decoration:none;
+    color:white;
+}
+
+.header-left li {
+    float: left;
+}
+
+.header-right li {
+    float: right;
+}
+
+/* main */
+#main {
+    padding:110px 12px;
+    background-color:white;
+    height:800px; /*ヘッダ固定確認のため一時的に設定*/
+}
+
+/* footer */
+footer {
+    background-color:darkblue;
+    opacity:0.8;
+}
+
+div.footer-right {
+    color:white;
+    float:right;
+    margin:12px;
 }

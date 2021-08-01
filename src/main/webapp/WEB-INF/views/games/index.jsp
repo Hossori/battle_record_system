@@ -4,6 +4,7 @@
 <%@ page import="constants.AttributeConst" %>
 
 <c:set var="actGame" value="${ForwardConst.ACT_GAME.getValue()}" />
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
 <c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
@@ -47,6 +48,18 @@
                </tr>
             </c:forEach>
         </table>
+
+        <div class="pagenation">
+            全 <c:out value="${game_count}" /> 件
+            <c:forEach var="i" begin="1" end="${(game_count-1)/maxRow+1}" step="1">
+                <c:choose>
+                    <c:when test="${i == page}"><c:out value="${i}" /></c:when>
+                    <c:otherwise><a href="<c:url value='?action=${actGame}&command=${commIdx}&page=${i}' />">
+                        <c:out value="${i}" />
+                    </a></c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
 
         <script>
         $(function() {

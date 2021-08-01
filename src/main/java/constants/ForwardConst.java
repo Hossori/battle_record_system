@@ -10,6 +10,7 @@ public enum ForwardConst {
     ACT("action"),
     ACT_AUTH("Auth"),
     ACT_TOP("Top"),
+    ACT_MYPAGE("Mypage"),
     ACT_GAME("Game"),
     ACT_MODE("Mode"),
     ACT_RECORD("Record"),
