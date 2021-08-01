@@ -18,6 +18,14 @@ public enum AttributeConst {
     TOKEN("_token"),
     ERR("errors"),
 
+    //削除フラグ
+    DELETE_FALSE(0),
+    DELETE_TRUE(1),
+    
+    //管理者フラグ
+    ADMIN_FALSE(0),
+    ADMIN_TRUE(1),
+
     //ログイン中のユーザー
     LOGIN_USER("login_user"),
 

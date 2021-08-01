@@ -34,7 +34,7 @@
         <!-- モードの削除 -->
         モード<br />
         <c:forEach var="mode" items="${game.modeList}" varStatus="status">
-            <c:if test="${mode.deleteFlag == 0}">
+            <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
                 <c:out value="${mode.name}" />
                 <a href="#" onclick="(function(){var name='destroy_mode${status.count}';confirmDestroy(name);})();">削除</a>
                 <form name="destroy_mode${status.count}" method="POST" action="<c:url value='?action=${actMode}&command=${commDst}' />">
