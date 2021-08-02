@@ -62,8 +62,14 @@ public class Record {
     @JoinColumn(name=JpaConst.RECORD_COL_MODE)
     private Mode mode;
 
-    @Column(name=JpaConst.RECORD_COL_WIN_OR_LOSE)
-    private String winOrLose;
+    @Column(name=JpaConst.RECORD_COL_WIN)
+    private Integer win;
+
+    @Column(name=JpaConst.RECORD_COL_LOSE)
+    private Integer lose;
+
+    @Column(name=JpaConst.RECORD_COL_DRAW)
+    private Integer draw;
 
     @Column(name=JpaConst.RECORD_COL_POINT)
     private Integer point;

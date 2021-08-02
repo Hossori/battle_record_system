@@ -58,7 +58,9 @@ public interface JpaConst {
     String RECORD_COL_USER = "user_id";
     String RECORD_COL_GAME = "game_id";
     String RECORD_COL_MODE = "mode_id";
-    String RECORD_COL_WIN_OR_LOSE = "win_or_lose";
+    String RECORD_COL_WIN = "win";
+    String RECORD_COL_LOSE = "lose";
+    String RECORD_COL_DRAW = "draw";
     String RECORD_COL_POINT = "point";
     String RECORD_COL_MEMO = "memo";
 
