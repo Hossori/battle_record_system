@@ -21,7 +21,7 @@ public enum AttributeConst {
     //削除フラグ
     DELETE_FALSE(0),
     DELETE_TRUE(1),
-    
+
     //管理者フラグ
     ADMIN_FALSE(0),
     ADMIN_TRUE(1),
@@ -44,12 +44,19 @@ public enum AttributeConst {
     GAMES("games"),
     GAME_COUNT("game_count"),
     GAME_ID("game_id"),
+    GAME_ID_SELECTED("game_id_selected"),
     GAME_NAME("game_name"),
 
     //モード
     MODE("mode"),
+    MODES("modes"),
     MODE_ID("mode_id"),
-    MODE_NAME("mode_name");
+    MODE_ID_SELECTED("mode_id_selected"),
+    MODE_NAME("mode_name"),
+
+    //レコード
+    RECORDS("records"),
+    RECORD_COUNT("record_count");
 
     //文字列
     private final String text;

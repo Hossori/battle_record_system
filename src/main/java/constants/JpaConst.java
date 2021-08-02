@@ -15,7 +15,7 @@ public interface JpaConst {
     String TABLE_USER = "users";
     String TABLE_GAME = "games";
     String TABLE_MODE = "modes";
-    String TABLE_RESULT = "results";
+    String TABLE_RECORD = "records";
 
     //usersテーブルのカラム
     String USER_COL_ID = "id";
@@ -52,21 +52,21 @@ public interface JpaConst {
     int MODE_DELETE_FLAG_FALSE = 0;
     int MODE_DELETE_FLAG_TRUE = 1;
 
-    //resultsテーブルのカラム
-    String RESULT_COL_ID = "id";
-    String RESULT_COL_DATE = "date";
-    String RESULT_COL_USER = "user_id";
-    String RESULT_COL_GAME = "game_id";
-    String RESULT_COL_MODE = "mode_id";
-    String RESULT_COL_WIN_OR_LOSE = "win_or_lose";
-    String RESULT_COL_POINT = "point";
-    String RESULT_COL_MEMO = "memo";
+    //recordsテーブルのカラム
+    String RECORD_COL_ID = "id";
+    String RECORD_COL_DATE = "date";
+    String RECORD_COL_USER = "user_id";
+    String RECORD_COL_GAME = "game_id";
+    String RECORD_COL_MODE = "mode_id";
+    String RECORD_COL_WIN_OR_LOSE = "win_or_lose";
+    String RECORD_COL_POINT = "point";
+    String RECORD_COL_MEMO = "memo";
 
     //エンティティ
     String ENTITY_USER = "User";
     String ENTITY_GAME = "Game";
     String ENTITY_MODE = "Mode";
-    String ENTITY_RESULT = "Result";
+    String ENTITY_RECORD = "Record";
 
     //JPQLパラメータ
     String JPQL_PARAM_EMAIL = "email";
@@ -74,17 +74,19 @@ public interface JpaConst {
     String JPQL_PARAM_GAME_NAME = "game_name";
     String JPQL_PARAM_MODE_NAME = "mode_name";
     String JPQL_PARAM_USER = "user";
+    String JPQL_PARAM_GAME = "game";
+    String JPQL_PARAM_MODE = "mode";
 
     //JPQL
     //メアドとパスワードで未削除のユーザーを検索する
     String Q_USER_GET_BY_EMAIL_AND_PASS = ENTITY_USER + ".getByEmailAndPass";
     String Q_USER_GET_BY_EMAIL_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.email = :" + JPQL_PARAM_EMAIL
-                                                                      + " AND u.password = :" + JPQL_PARAM_PASS
-                                                                      + " AND u.deleteFlag = " + USER_DELETE_FLAG_FALSE;
+                                                                   + " AND u.password = :" + JPQL_PARAM_PASS
+                                                                   + " AND u.deleteFlag = " + USER_DELETE_FLAG_FALSE;
     //メアドで未削除のユーザーを検索し、その件数を取得する（重複回避用）
     String Q_USER_COUNT_BY_EMAIL = ENTITY_USER + ".countByEmail";
     String Q_USER_COUNT_BY_EMAIL_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.email = :" + JPQL_PARAM_EMAIL
-                                                                       + " AND u.deleteFlag = " + USER_DELETE_FLAG_FALSE;
+                                                                   + " AND u.deleteFlag = " + USER_DELETE_FLAG_FALSE;
     //全ての未削除のゲームをidの降順で取得
     String Q_GAME_GET_ALL = ENTITY_GAME + ".getAll";
     String Q_GAME_GET_ALL_DEF = "SELECT g FROM Game AS g WHERE g.deleteFlag = " + GAME_DELETE_FLAG_FALSE + " ORDER BY g.id DESC";
@@ -98,11 +100,40 @@ public interface JpaConst {
     String Q_GAME_COUNT_BY_NAME_DEF = "SELECT COUNT(g) FROM Game AS g WHERE g.name = :" + JPQL_PARAM_GAME_NAME
                                                                       + " AND g.deleteFlag = " + GAME_DELETE_FLAG_FALSE;
 
+    //全ての戦績を日時の新しい順で取得
+    String Q_RECORD_GET_ALL = ENTITY_RECORD + ".getAll";
+    String Q_RECORD_GET_ALL_DEF = "SELECT r FROM Record AS r ORDER BY r.date DESC";
+
+    //ゲームを指定し、戦績を日時の新しい順で取得
+    String Q_RECORD_GET_BY_GAME = ENTITY_RECORD + ".getByGame";
+    String Q_RECORD_GET_BY_GAME_DEF =
+        "SELECT r FROM Record AS r WHERE r.game = :" + JPQL_PARAM_GAME
+                               + " ORDER BY r.date DESC";
+
+    //ゲーム・モードを指定し、戦績を日時の新しい順で取得
+    String Q_RECORD_GET_BY_GAME_AND_MODE = ENTITY_RECORD + ".getByGameAndMode";
+    String Q_RECORD_GET_BY_GAME_AND_MODE_DEF =
+        "SELECT r FROM Record AS r WHERE r.game = :" + JPQL_PARAM_GAME
+                               + " AND r.mode = :" + JPQL_PARAM_MODE
+                               + " ORDER BY r.date DESC";
+
+    //ユーザーを指定し、戦績を日時の新しい順で取得
+    String Q_RECORD_GET_BY_USER = ENTITY_RECORD + ".getByUser";
+    String Q_RECORD_GET_BY_USER_DEF =
+        "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
+                               + " ORDER BY r.date DESC";
+
+    //ユーザー・ゲームを指定し、戦績を日時の新しい順で取得
+    String Q_RECORD_GET_BY_USER_AND_GAME = ENTITY_RECORD + ".getByUserAndGame";
+    String Q_RECORD_GET_BY_USER_AND_GAME_DEF =
+        "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
+                               + " ORDER BY r.date DESC";
+
     //ユーザー・ゲーム・モードを指定し、戦績を日時の新しい順で取得
-    String Q_RESULT_GET_BY_USER_AND_GAME_AND_MODE = ENTITY_RESULT + ".getByUserAndGameAndMode";
-    String Q_RESULT_GET_BY_USER_AND_GAME_AND_MODE_DEF = 
-        "SELECT r FROM Result AS r WHERE r.user = :" + JPQL_PARAM_USER
-                               + " AND r.game.name LIKE :" + JPQL_PARAM_GAME_NAME
-                               + " AND r.mode.name LIKE :" + JPQL_PARAM_MODE_NAME
+    String Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE = ENTITY_RECORD + ".getByUserAndGameAndMode";
+    String Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE_DEF =
+        "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
+                               + " AND r.game = :" + JPQL_PARAM_GAME
+                               + " AND r.mode = :" + JPQL_PARAM_MODE
                                + " ORDER BY r.date DESC";
 }

@@ -65,6 +65,7 @@ public class LoginFilter implements Filter {
                             || ForwardConst.CMD_SIGNUP.getValue().equals(command))
                      ) && !(ForwardConst.ACT_TOP.getValue().equals(action))
                        && !(ForwardConst.ACT_RECORD.getValue().equals(action))
+                       && !(ForwardConst.ACT_AJAX.getValue().equals(action))
                   ){
 
                     //ログイン・新規登録・トップページ・戦績ページ以外はログインページにリダイレクト

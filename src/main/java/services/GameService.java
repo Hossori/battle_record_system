@@ -7,6 +7,11 @@ import models.Game;
 
 public class GameService extends ServiceBase {
 
+    public List<Game> getAll() {
+        return em.createNamedQuery(JpaConst.Q_GAME_GET_ALL, Game.class)
+                                  .getResultList();
+    }
+
     public Game getById(int id) {
         return em.find(Game.class, id);
     }

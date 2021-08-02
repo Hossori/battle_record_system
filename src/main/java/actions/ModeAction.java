@@ -80,5 +80,4 @@ public class ModeAction extends ActionBase {
             }
         }
     }
-
 }

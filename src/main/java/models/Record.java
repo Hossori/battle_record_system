@@ -20,46 +20,55 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name=JpaConst.TABLE_RESULT)
+@Table(name=JpaConst.TABLE_RECORD)
 @NamedQueries({
     @NamedQuery(
-            name = JpaConst.Q_RESULT_GET_BY_USER_AND_GAME_AND_MODE,
-            query = JpaConst.Q_RESULT_GET_BY_USER_AND_GAME_AND_MODE_DEF)
+            name = JpaConst.Q_RECORD_GET_ALL,
+            query = JpaConst.Q_RECORD_GET_ALL_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_RECORD_GET_BY_GAME,
+            query = JpaConst.Q_RECORD_GET_BY_GAME_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_RECORD_GET_BY_GAME_AND_MODE,
+            query = JpaConst.Q_RECORD_GET_BY_GAME_AND_MODE_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE,
+            query = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE_DEF)
 })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Result {
+public class Record {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name=JpaConst.RESULT_COL_ID)
+    @Column(name=JpaConst.RECORD_COL_ID)
     private Integer id;
 
-    @Column(name=JpaConst.RESULT_COL_DATE)
+    @Column(name=JpaConst.RECORD_COL_DATE)
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name=JpaConst.RESULT_COL_USER)
+    @JoinColumn(name=JpaConst.RECORD_COL_USER)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name=JpaConst.RESULT_COL_GAME)
+    @JoinColumn(name=JpaConst.RECORD_COL_GAME)
     private Game game;
 
     @ManyToOne
-    @JoinColumn(name=JpaConst.RESULT_COL_MODE)
+    @JoinColumn(name=JpaConst.RECORD_COL_MODE)
     private Mode mode;
 
-    @Column(name=JpaConst.RESULT_COL_WIN_OR_LOSE)
+    @Column(name=JpaConst.RECORD_COL_WIN_OR_LOSE)
     private String winOrLose;
 
-    @Column(name=JpaConst.RESULT_COL_POINT)
+    @Column(name=JpaConst.RECORD_COL_POINT)
     private Integer point;
 
-    @Column(name=JpaConst.RESULT_COL_MEMO)
+    @Column(name=JpaConst.RECORD_COL_MEMO)
     @Lob
     private String memo;
 }

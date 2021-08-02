@@ -5,7 +5,7 @@
 		<class>models.User</class>
 		<class>models.Game</class>
 		<class>models.Mode</class>
-		<class>models.Result</class>
+		<class>models.Record</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/battle_record_system?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
