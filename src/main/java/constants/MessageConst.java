@@ -20,7 +20,9 @@ public enum MessageConst {
     S_GAME_DESTROY("ゲームを削除しました。"),
     S_MODE_CREATE("モードを登録しました。"),
     E_NO_MODENAME("モード名を入力してください。"),
-    S_MODE_DESTROY("モードを削除しました。");
+    S_MODE_DESTROY("モードを削除しました。"),
+    S_RECORD_CREATE("戦績を登録しました。"),
+    S_RECORD_UPDATE("戦績を編集しました。");
 
     /*
      * 文字列

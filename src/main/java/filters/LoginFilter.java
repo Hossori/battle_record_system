@@ -58,17 +58,24 @@ public class LoginFilter implements Filter {
             User u = (User) session.getAttribute(AttributeConst.LOGIN_USER.getValue());
             if(u == null) { //未ログイン
                 if(
-                    !(ForwardConst.ACT_AUTH.getValue().equals(action)
-                        && (ForwardConst.CMD_LOGIN_FORM.getValue().equals(command)
-                            || ForwardConst.CMD_LOGIN.getValue().equals(command)
-                            || ForwardConst.CMD_SIGNUP_FORM.getValue().equals(command)
-                            || ForwardConst.CMD_SIGNUP.getValue().equals(command))
-                     ) && !(ForwardConst.ACT_TOP.getValue().equals(action))
-                       && !(ForwardConst.ACT_RECORD.getValue().equals(action))
-                       && !(ForwardConst.ACT_AJAX.getValue().equals(action))
-                  ){
+                    !(ForwardConst.ACT_AUTH.getValue().equals(action) &&
+                       (ForwardConst.CMD_LOGIN_FORM.getValue().equals(command) ||
+                        ForwardConst.CMD_LOGIN.getValue().equals(command))
+                     ) &&
+                    !(ForwardConst.ACT_USER.getValue().equals(action) &&
+                       (ForwardConst.CMD_ENTRY.getValue().equals(command) ||
+                        ForwardConst.CMD_CREATE.getValue().equals(command) ||
+                        ForwardConst.CMD_SHOW.getValue().equals(command))
+                    ) &&
+                    !(ForwardConst.ACT_RECORD.getValue().equals(action) &&
+                       (ForwardConst.CMD_INDEX.getValue().equals(command) ||
+                        ForwardConst.CMD_SHOW.getValue().equals(command))
+                    ) &&
+                    !(ForwardConst.ACT_TOP.getValue().equals(action)) &&
+                    !(ForwardConst.ACT_AJAX.getValue().equals(action))
+                  ) {
 
-                    //ログイン・新規登録・トップページ・戦績ページ以外はログインページにリダイレクト
+                    //ログイン・新規登録・トップページ・戦績のindex,show・ajax以外はログインページにリダイレクト
                     ((HttpServletResponse) response).sendRedirect(
                             contextPath + "?action=" + ForwardConst.ACT_AUTH.getValue()
                                         + "&command=" + ForwardConst.CMD_LOGIN_FORM.getValue());
@@ -77,8 +84,7 @@ public class LoginFilter implements Filter {
                 }
             } else { //ログイン済み
                 if(ForwardConst.ACT_AUTH.getValue().equals(action)) { //認証系Action
-                    if(ForwardConst.CMD_LOGIN_FORM.getValue().equals(command)
-                        || ForwardConst.CMD_SIGNUP_FORM.getValue().equals(command)) {
+                    if(ForwardConst.CMD_LOGIN_FORM.getValue().equals(command)) {
                         //ログイン・新規登録ページの表示 => トップへ
                         ((HttpServletResponse) response).sendRedirect(
                                 contextPath + "?action=" + ForwardConst.ACT_TOP.getValue()

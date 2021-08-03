@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="constants.ForwardConst" %>
 <%@ page import="constants.AttributeConst" %>
 
@@ -47,10 +48,12 @@
                     <td class="record_user"><c:out value="${record.user.name}" /></td>
                     <td class="record_game"><c:out value="${record.game.name}" /></td>
                     <td class="record_mode"><c:out value="${record.mode.name}" /></td>
-                    <td class="record_win_rate"><c:out value="${record.winRate}" />%</td>
-                    <td class="record_point"><c:out value="${record.point}" />pt</td>
+                    <td class="record_win_rate"><fmt:formatNumber value="${record.winRate}" pattern="0.00" />%</td>
+                    <td class="record_point">
+                        <c:if test="${record.point != null}"><c:out value="${record.point}" />pt</c:if>
+                    </td>
                     <td class="record_detail">
-                        <a href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">詳細</a>
+                        <a href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">詳細を見る</a>
                     </td>
                 </tr>
             </c:forEach>

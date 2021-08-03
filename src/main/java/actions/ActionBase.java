@@ -3,7 +3,7 @@ package actions;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -177,16 +177,22 @@ public abstract class ActionBase {
     }
 
     /*
-     * 文字列をLocalDate型に変換する
+     * yyyy/MM/dd HH:mmの文字列をLocalDateTime型に変換する
      * @param strDate 文字列
-     * @return LocalDateインスタンス null,空文字の場合は今日の日付を返す
+     * @return LocalDateインスタンス parseに失敗した場合は今日の日付を返す
      */
-    protected LocalDate toLocalDate(String strDate) {
-        if(strDate == null || strDate.equals("")) {
-            return LocalDate.now();
+    protected LocalDateTime toLocalDateTime(String strDateTime) {
+        LocalDateTime datetime;
+
+        strDateTime = strDateTime.replaceAll("/", "-").replace(" ", "T") + ":00.00";
+
+        try {
+            datetime = LocalDateTime.parse(strDateTime);
+        } catch(Exception e) {
+            datetime = LocalDateTime.now();
         }
 
-        return LocalDate.parse(strDate);
+        return datetime;
     }
 
     /*

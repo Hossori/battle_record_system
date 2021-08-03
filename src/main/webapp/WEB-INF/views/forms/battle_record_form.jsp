@@ -5,26 +5,39 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 
-<c:set var="now" value="${LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyy/MM/dd HH:mm'))}" />
+<!-- createの際は今の日時をセット -->
+<c:choose>
+    <c:when test="${record == null}">
+        <c:set var="datetime" value="${LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyy/MM/dd HH:mm'))}" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="datetime" value="${record.datetime.format(DateTimeFormatter.ofPattern('yyyy/MM/dd HH:mm'))}" />
+    </c:otherwise>
+</c:choose>
 
 <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label>
-<select id="game_list">
+<select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
     <c:forEach var="game" items="${games}">
         <option value="${game.id}" label="${game.name}" <c:if test="${game.id == record.game.id}">selected</c:if> />
     </c:forEach>
 </select>
 <br />
 
+<!-- editの時 -->
+<c:if test="${modes == null}">
+    <c:set var="modes" value="${record.game.modeList}" />
+</c:if>
+
 <label for="${AttributeConst.MODE_ID.getValue()}">モード</label>
-<select id="mode_list">
-    <c:forEach var="mode" items="${record.game.modeList}">
+<select id="mode_list" name="${AttributeConst.MODE_ID.getValue()}">
+    <c:forEach var="mode" items="${modes}">
         <option value="${mode.id}" label="${mode.name}" <c:if test="${mode.id == record.mode.id}">selected</c:if> />
     </c:forEach>
 </select>
 <br />
 
 <label for="${AttributeConst.RECORD_DATETIME.getValue()}">日時</label>
-<input id="datetime" type="text" name="${AttributeConst.RECORD_DATETIME.getValue()}" value="${now}">
+<input id="datetime" type="text" name="${AttributeConst.RECORD_DATETIME.getValue()}" value="${datetime}">
 <br />
 
 <fieldset name="${AttributeConst.RECORD_WIN_OR_LOSE.getValue()}">
@@ -52,5 +65,29 @@
         $.datetimepicker.setLocale('ja');
         $('#datetime').datetimepicker({
         });
+    });
+
+    $(function() {
+        //セレクトボックスの値が変わったとき
+        $("select#game_list").change(
+            function() {
+                $("select#mode_list option").remove();
+
+                var id = $("select#game_list option:selected").val();
+                if(0 < id) {
+                    $.ajax({
+                        type: "GET",
+                        url: "battle_record_system/?action=Ajax&command=getModeListByGame",
+                        data: {game_id: id},
+                        success: function(modeJSON) {
+                                     var modeList = $.parseJSON(modeJSON);
+                                     $.each(modeList, function(key, value) {
+                                         $("select#mode_list").append('<option value="'+value.id+'" label="'+value.name+'" />');
+                                     })
+                                 }
+                    });
+                }
+            }
+        );
     });
 </script>

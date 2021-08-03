@@ -18,9 +18,9 @@
                 <td class="record_user"><c:out value="${record.user.name}" /></td>
             </tr>
             <tr>
-                <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="recordDatetime" type="date" />
+                <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm" var="recordDatetime" type="date" />
                 <th class="record_datetime">日時</th>
-                <td class="record_datetime"><fmt:formatDate value="${recordDatetime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                <td class="record_datetime"><fmt:formatDate value="${recordDatetime}" pattern="yyyy-MM-dd HH:mm" /></td>
             </tr>
             <tr>
                 <th class="record_game">ゲーム</th>
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <th class="record_win_rate">勝率</th>
-                <td class="record_win_rate"><c:out value="${record.winRate}" />%</td>
+                <td class="record_win_rate"><fmt:formatNumber value="${record.winRate}" pattern="0.00" />%</td>
             </tr>
             <tr>
                 <th class="record_win_or_lose">勝敗</th>
@@ -44,7 +44,9 @@
             </tr>
             <tr>
                 <th class="record_point">ポイント</th>
-                <td class="record_point"><c:out value="${record.point}" />&nbsp;pt</td>
+                <td class="record_point">
+                    <c:if test="${record.point != null}"><c:out value="${record.point}" />pt</c:if>
+                </td>
             </tr>
             <tr>
                 <th class="record_memo">メモ</th>

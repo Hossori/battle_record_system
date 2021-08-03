@@ -14,6 +14,34 @@ public class RecordService extends ServiceBase {
         return em.find(Record.class, id);
     }
 
+    public void create(Record r) {
+        em.getTransaction().begin();
+        em.persist(r);
+        em.getTransaction().commit();
+    }
+
+    public void update(Record r, Record update_r) {
+        em.getTransaction().begin();
+
+        r.setDatetime(update_r.getDatetime());
+        r.setGame(update_r.getGame());
+        r.setMode(update_r.getMode());
+        r.setWinRate(update_r.getWinRate());
+        r.setWin(update_r.getWin());
+        r.setLose(update_r.getLose());
+        r.setDraw(update_r.getDraw());
+        r.setPoint(update_r.getPoint());
+        r.setMemo(update_r.getMemo());
+
+        em.getTransaction().commit();
+    }
+
+    public void destroy(Record r) {
+        em.getTransaction().begin();
+        em.remove(r);
+        em.getTransaction().commit();
+    }
+
     /*
      * 指定したページに表示する戦績を返却する
      */
