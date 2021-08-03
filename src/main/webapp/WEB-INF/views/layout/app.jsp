@@ -5,11 +5,12 @@
 
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
-<c:set var="actMy" value="${ForwardConst.ACT_MYPAGE.getValue()}" />
+<c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
 <c:set var="actGame" value="${ForwardConst.ACT_GAME.getValue()}" />
 <c:set var="commLoginForm" value="${ForwardConst.CMD_LOGIN_FORM.getValue()}" />
 <c:set var="commSignupForm" value="${ForwardConst.CMD_SIGNUP_FORM.getValue()}" />
 <c:set var="commLogout" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
+<c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 
 <!DOCTYPE html>
@@ -20,6 +21,9 @@
         <link rel="stylesheet" href="<c:url value='/css/reset.css' />">
         <link rel="stylesheet" href="<c:url value='/css/style.css' />">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/build/jquery.datetimepicker.full.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/jquery.datetimepicker.css">
     </head>
     <body>
         <header>
@@ -30,7 +34,7 @@
                 <div class="header-menu">
                     <ul>
                         <li><a href="<c:url value='?action=${actTop}&command=${commIdx}' />">トップ</a></li>
-                        <li><a href="<c:url value='?action=${actMy}&command=${commIdx}' />">マイページ</a></li>
+                        <li><a href="<c:url value='?action=${actUser}&command=${commMypage}' />">マイページ</a></li>
                         <c:if test="${sessionScope.login_user != null}">
                             <c:if test="${sessionScope.login_user.adminFlag == AttributeConst.ADMIN_TRUE.getIntegerValue()}">
                                 <li><a href="<c:url value='?action=${actGame}&command=${commIdx}' />">ゲーム管理</a></li>

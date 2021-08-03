@@ -54,10 +54,11 @@ public interface JpaConst {
 
     //recordsテーブルのカラム
     String RECORD_COL_ID = "id";
-    String RECORD_COL_DATE = "date";
+    String RECORD_COL_DATETIME = "datetime";
     String RECORD_COL_USER = "user_id";
     String RECORD_COL_GAME = "game_id";
     String RECORD_COL_MODE = "mode_id";
+    String RECORD_COL_WIN_RATE = "win_rate";
     String RECORD_COL_WIN = "win";
     String RECORD_COL_LOSE = "lose";
     String RECORD_COL_DRAW = "draw";
@@ -104,32 +105,32 @@ public interface JpaConst {
 
     //全ての戦績を日時の新しい順で取得
     String Q_RECORD_GET_ALL = ENTITY_RECORD + ".getAll";
-    String Q_RECORD_GET_ALL_DEF = "SELECT r FROM Record AS r ORDER BY r.date DESC";
+    String Q_RECORD_GET_ALL_DEF = "SELECT r FROM Record AS r ORDER BY r.datetime DESC";
 
     //ゲームを指定し、戦績を日時の新しい順で取得
     String Q_RECORD_GET_BY_GAME = ENTITY_RECORD + ".getByGame";
     String Q_RECORD_GET_BY_GAME_DEF =
         "SELECT r FROM Record AS r WHERE r.game = :" + JPQL_PARAM_GAME
-                               + " ORDER BY r.date DESC";
+                               + " ORDER BY r.datetime DESC";
 
     //ゲーム・モードを指定し、戦績を日時の新しい順で取得
     String Q_RECORD_GET_BY_GAME_AND_MODE = ENTITY_RECORD + ".getByGameAndMode";
     String Q_RECORD_GET_BY_GAME_AND_MODE_DEF =
         "SELECT r FROM Record AS r WHERE r.game = :" + JPQL_PARAM_GAME
                                + " AND r.mode = :" + JPQL_PARAM_MODE
-                               + " ORDER BY r.date DESC";
+                               + " ORDER BY r.datetime DESC";
 
     //ユーザーを指定し、戦績を日時の新しい順で取得
     String Q_RECORD_GET_BY_USER = ENTITY_RECORD + ".getByUser";
     String Q_RECORD_GET_BY_USER_DEF =
         "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
-                               + " ORDER BY r.date DESC";
+                               + " ORDER BY r.datetime DESC";
 
     //ユーザー・ゲームを指定し、戦績を日時の新しい順で取得
     String Q_RECORD_GET_BY_USER_AND_GAME = ENTITY_RECORD + ".getByUserAndGame";
     String Q_RECORD_GET_BY_USER_AND_GAME_DEF =
         "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
-                               + " ORDER BY r.date DESC";
+                               + " ORDER BY r.datetime DESC";
 
     //ユーザー・ゲーム・モードを指定し、戦績を日時の新しい順で取得
     String Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE = ENTITY_RECORD + ".getByUserAndGameAndMode";
@@ -137,5 +138,5 @@ public interface JpaConst {
         "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
                                + " AND r.game = :" + JPQL_PARAM_GAME
                                + " AND r.mode = :" + JPQL_PARAM_MODE
-                               + " ORDER BY r.date DESC";
+                               + " ORDER BY r.datetime DESC";
 }

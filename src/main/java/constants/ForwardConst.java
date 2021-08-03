@@ -10,8 +10,8 @@ public enum ForwardConst {
     ACT("action"),
     ACT_AUTH("Auth"),
     ACT_TOP("Top"),
-    ACT_MYPAGE("Mypage"),
     ACT_RECORD("Record"),
+    ACT_USER("User"),
     ACT_GAME("Game"),
     ACT_MODE("Mode"),
     ACT_AJAX("Ajax"),
@@ -23,8 +23,10 @@ public enum ForwardConst {
     CMD_LOGOUT("logout"),
     CMD_SIGNUP_FORM("signupForm"),
     CMD_SIGNUP("signup"),
+    CMD_MYPAGE("mypage"),
     CMD_INDEX("index"),
     CMD_CREATE("create"),
+    CMD_SHOW("show"),
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
@@ -35,7 +37,9 @@ public enum ForwardConst {
     FW_LOGIN("auth/login"),
     FW_SIGNUP("auth/signup"),
     FW_GAME_INDEX("games/index"),
-    FW_GAME_EDIT("games/edit");
+    FW_GAME_EDIT("games/edit"),
+    FW_RECORD_SHOW("records/show"),
+    FW_RECORD_EDIT("records/edit");
 
     /*
      * 文字列

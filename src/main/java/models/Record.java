@@ -47,8 +47,8 @@ public class Record {
     @Column(name=JpaConst.RECORD_COL_ID)
     private Integer id;
 
-    @Column(name=JpaConst.RECORD_COL_DATE)
-    private LocalDateTime date;
+    @Column(name=JpaConst.RECORD_COL_DATETIME)
+    private LocalDateTime datetime;
 
     @ManyToOne
     @JoinColumn(name=JpaConst.RECORD_COL_USER)
@@ -61,6 +61,9 @@ public class Record {
     @ManyToOne
     @JoinColumn(name=JpaConst.RECORD_COL_MODE)
     private Mode mode;
+
+    @Column(name=JpaConst.RECORD_COL_WIN_RATE)
+    private Double winRate;
 
     @Column(name=JpaConst.RECORD_COL_WIN)
     private Integer win;

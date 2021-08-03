@@ -10,6 +10,10 @@ import models.User;
 
 public class RecordService extends ServiceBase {
 
+    public Record getById(int id) {
+        return em.find(Record.class, id);
+    }
+
     /*
      * 指定したページに表示する戦績を返却する
      */

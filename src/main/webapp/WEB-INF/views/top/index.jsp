@@ -6,7 +6,7 @@
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="actRecord" value="${ForwardConst.ACT_RECORD.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
-<c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
+<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">みんなの戦績</c:param>
@@ -38,7 +38,7 @@
                 <th class="record_user">ユーザー</th>
                 <th class="record_game">ゲーム</th>
                 <th class="record_mode">モード</th>
-                <th class="record_win">勝敗</th>
+                <th class="record_win_rate">勝率</th>
                 <th class="record_point">ポイント</th>
                 <th class="record_detail">詳細</th>
             </tr>
@@ -47,14 +47,10 @@
                     <td class="record_user"><c:out value="${record.user.name}" /></td>
                     <td class="record_game"><c:out value="${record.game.name}" /></td>
                     <td class="record_mode"><c:out value="${record.mode.name}" /></td>
-                    <td class="record_win_or_lose">
-                        <c:out value="${record.win}" />勝
-                        <c:out value="${record.lose}" />敗
-                        <c:out value="${record.draw}" />分
-                    </td>
-                    <td class="record_point"><c:out value="${record.point}" /></td>
+                    <td class="record_win_rate"><c:out value="${record.winRate}" />%</td>
+                    <td class="record_point"><c:out value="${record.point}" />pt</td>
                     <td class="record_detail">
-                        <a href="<c:url value='?action=${actRecord}&command=${commandShow}&record_id=${record.id}' />">詳細</a>
+                        <a href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">詳細</a>
                     </td>
                 </tr>
             </c:forEach>

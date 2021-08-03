@@ -55,7 +55,16 @@ public enum AttributeConst {
     MODE_NAME("mode_name"),
 
     //レコード
+    RECORD("record"),
     RECORDS("records"),
+    RECORD_ID("record_id"),
+    RECORD_DATETIME("record_datetime"),
+    RECORD_WIN_OR_LOSE("record_win_or_lose"),
+    RECORD_WIN("record_win"),
+    RECORD_LOSE("record_lose"),
+    RECORD_DRAW("record_draw"),
+    RECORD_POINT("record_point"),
+    RECORD_MEMO("record_memo"),
     RECORD_COUNT("record_count");
 
     //文字列
