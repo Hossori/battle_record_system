@@ -12,9 +12,17 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">戦績編集</c:param>
     <c:param name="content">
-        <form method="POST" action="<c:url value='?action=${actRecord}&command=${commUpd}&record_id=${record.id}' />">
+        <form method="POST">
             <c:import url="/WEB-INF/views/forms/battle_record_form.jsp" />
-            <button type="submit">登録</button>
         </form>
+        <a href="#" onclick="(function(){var cmd='${commUpd}';submit(cmd);})();">登録</a>
+        <a href="#" onclick="(function(){var cmd='${commDst}';submit(cmd);})();">削除</a>
+
+        <script>
+            function submit(cmd) {
+                document.forms[0].action = "<c:url value='?action=${actRecord}&command="+cmd+"&record_id=${record.id}' />";
+                document.forms[0].submit();
+            }
+        </script>
     </c:param>
 </c:import>
