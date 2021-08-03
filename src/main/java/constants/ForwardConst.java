@@ -21,10 +21,9 @@ public enum ForwardConst {
     CMD_LOGIN_FORM("loginForm"),
     CMD_LOGIN("login"),
     CMD_LOGOUT("logout"),
-    CMD_SIGNUP_FORM("signupForm"),
-    CMD_SIGNUP("signup"),
     CMD_MYPAGE("mypage"),
     CMD_INDEX("index"),
+    CMD_ENTRY("entry"),
     CMD_CREATE("create"),
     CMD_SHOW("show"),
     CMD_EDIT("edit"),
@@ -35,10 +34,11 @@ public enum ForwardConst {
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("top/index"),
     FW_LOGIN("auth/login"),
-    FW_SIGNUP("auth/signup"),
+    FW_USER_ENTRY("users/entry"),
     FW_GAME_INDEX("games/index"),
     FW_GAME_EDIT("games/edit"),
     FW_RECORD_SHOW("records/show"),
+    FW_RECORD_ENTRY("records/entry"),
     FW_RECORD_EDIT("records/edit");
 
     /*

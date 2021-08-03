@@ -3,13 +3,13 @@
 <%@ page import="constants.ForwardConst" %>
 <%@ page import="constants.AttributeConst" %>
 
-<c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
-<c:set var="commSignup" value="${ForwardConst.CMD_SIGNUP.getValue()}" />
+<c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
+<c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">新規登録</c:param>
     <c:param name="content">
-        <form method="POST" action="<c:url value='?action=${actAuth}&command=${commSignup}' />">
+        <form method="POST" action="<c:url value='?action=${actUser}&command=${commCrt}' />">
             <label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label><br />
             <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}"
                     value="${user_email}" placeholder="email@address.com"><br />

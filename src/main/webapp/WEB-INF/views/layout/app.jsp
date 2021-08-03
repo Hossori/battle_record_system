@@ -8,10 +8,10 @@
 <c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
 <c:set var="actGame" value="${ForwardConst.ACT_GAME.getValue()}" />
 <c:set var="commLoginForm" value="${ForwardConst.CMD_LOGIN_FORM.getValue()}" />
-<c:set var="commSignupForm" value="${ForwardConst.CMD_SIGNUP_FORM.getValue()}" />
 <c:set var="commLogout" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
 <c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commEntry" value="${ForwardConst.CMD_ENTRY.getValue()}" />
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -49,11 +49,11 @@
                         <c:choose>
                             <c:when test="${sessionScope.login_user == null}">
                                 <li><a href="<c:url value='?action=${actAuth}&command=${commLoginForm}' />">ログイン</a></li>
-                                <li><a href="<c:url value='?action=${actAuth}&command=${commSignupForm}' />">新規登録</a></li>
+                                <li><a href="<c:url value='?action=${actUser}&command=${commEntry}' />">新規登録</a></li>
                             </c:when>
                             <c:otherwise>
                                 <li><a href="<c:url value='?action=${actAuth}&command=${commLogout}' />">ログアウト</a></li>
-                                <li><a href="<c:url value='?action=${actMy}&command=${commShow}' />">
+                                <li><a href="<c:url value='?action=${actUser}&command=${commMypage}' />">
                                     <c:out value="${sessionScope.login_user.name}" />
                                 </a></li>
                             </c:otherwise>

@@ -5,7 +5,6 @@
 
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
 <c:set var="commLogin" value="${ForwardConst.CMD_LOGIN.getValue()}" />
-<c:set var="commSignupForm" value="${ForwardConst.CMD_SIGNUP_FORM.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">ログイン</c:param>
