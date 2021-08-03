@@ -45,6 +45,8 @@
 <label for="${AttributeConst.RECORD_MEMO.getValue()}">メモ</label>
 <textarea name="${AttributeConst.RECORD_MEMO.getValue()}"><c:out value="${record.memo}" /></textarea>
 
+<input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
+
 <script>
     $(function() {
         $.datetimepicker.setLocale('ja');
