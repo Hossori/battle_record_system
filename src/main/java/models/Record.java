@@ -47,19 +47,19 @@ public class Record {
     @Column(name=JpaConst.RECORD_COL_ID)
     private Integer id;
 
-    @Column(name=JpaConst.RECORD_COL_DATETIME)
+    @Column(name=JpaConst.RECORD_COL_DATETIME, nullable=false)
     private LocalDateTime datetime;
 
     @ManyToOne
-    @JoinColumn(name=JpaConst.RECORD_COL_USER)
+    @JoinColumn(name=JpaConst.RECORD_COL_USER, nullable=false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name=JpaConst.RECORD_COL_GAME)
+    @JoinColumn(name=JpaConst.RECORD_COL_GAME, nullable=false)
     private Game game;
 
     @ManyToOne
-    @JoinColumn(name=JpaConst.RECORD_COL_MODE)
+    @JoinColumn(name=JpaConst.RECORD_COL_MODE, nullable=false)
     private Mode mode;
 
     @Column(name=JpaConst.RECORD_COL_WIN_RATE)
