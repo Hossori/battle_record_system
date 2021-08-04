@@ -32,8 +32,14 @@ import lombok.Setter;
             name = JpaConst.Q_RECORD_GET_BY_GAME_AND_MODE,
             query = JpaConst.Q_RECORD_GET_BY_GAME_AND_MODE_DEF),
     @NamedQuery(
+            name = JpaConst.Q_RECORD_GET_BY_USER,
+            query = JpaConst.Q_RECORD_GET_BY_USER_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME,
+            query = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_DEF),
+    @NamedQuery(
             name = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE,
-            query = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE_DEF)
+            query = JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE_DEF),
 })
 @Getter
 @Setter

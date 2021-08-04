@@ -46,21 +46,22 @@ public class TopAction extends ActionBase {
         List<Mode> modes;
         int game_id = toNumber(getRequestParam(AttributeConst.GAME_ID));
         int mode_id = toNumber(getRequestParam(AttributeConst.MODE_ID));
-        if(game_id == Integer.MIN_VALUE || game_id == 0) { //ゲームにつき未選択又は「全て」を選択
+        if(game_id <= 0) { //ゲームにつき未選択又は「全て」を選択
             records = recordService.getPerPage(page);
             modes = null;
         } else {
             Game g = gameService.getById(game_id);
 
-            if(mode_id == Integer.MIN_VALUE || mode_id == 0) { //モードにつき未選択又は「全て」を選択
+            if(mode_id <= 0) { //モードにつき未選択又は「全て」を選択
                 records = recordService.getByGamePerPage(g, page);
-                modes = g.getModeList();
 
             } else { //ゲーム及びモードを選択済み
                 Mode m = modeService.getById(mode_id);
                 records = recordService.getByGameAndModePerPage(g, m, page);
-                modes = g.getModeList();
+
             }
+
+            modes = g.getModeList();
         }
         int count;
         if(records != null) {

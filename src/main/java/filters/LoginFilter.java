@@ -85,7 +85,7 @@ public class LoginFilter implements Filter {
             } else { //ログイン済み
                 if(ForwardConst.ACT_AUTH.getValue().equals(action)) { //認証系Action
                     if(ForwardConst.CMD_LOGIN_FORM.getValue().equals(command)) {
-                        //ログイン・新規登録ページの表示 => トップへ
+                        //ログインページの表示 => トップへ
                         ((HttpServletResponse) response).sendRedirect(
                                 contextPath + "?action=" + ForwardConst.ACT_TOP.getValue()
                                             + "&command=" + ForwardConst.CMD_INDEX.getValue());

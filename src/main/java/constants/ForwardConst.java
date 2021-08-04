@@ -34,6 +34,7 @@ public enum ForwardConst {
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("top/index"),
     FW_LOGIN("auth/login"),
+    FW_USER_MYPAGE("users/mypage"),
     FW_USER_ENTRY("users/entry"),
     FW_GAME_INDEX("games/index"),
     FW_GAME_EDIT("games/edit"),

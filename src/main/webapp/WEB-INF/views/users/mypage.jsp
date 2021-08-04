@@ -4,15 +4,15 @@
 <%@ page import="constants.ForwardConst" %>
 <%@ page import="constants.AttributeConst" %>
 
-<c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
-<c:set var="actRecord" value="${ForwardConst.ACT_RECORD.getValue()}" />
-<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
+<c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
+<c:set var="commEntry" value="${ForwardConst.CMD_ENTRY.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
-    <c:param name="title">みんなの戦績</c:param>
+    <c:param name="title">マイページ</c:param>
     <c:param name="content">
-        <form method="POST" action="<c:url value='?action=${actTop}&command=${commIdx}' />">
+        <form method="POST" action="<c:url value='?action=${actRecord}&command=${commMypage}' />">
             <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label><br />
             <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
                 <option value=0 label="全て" />
@@ -33,11 +33,11 @@
 
             <button type="submit">戦績表示</button>
         </form>
+        <a href="<c:url value='?action=${actRecord}&command=${commEntry}' />">戦績登録</a>
 
         <table>
             <tr>
                 <th class="record_date">日付</th>
-                <th class="record_user">ユーザー</th>
                 <th class="record_game">ゲーム</th>
                 <th class="record_mode">モード</th>
                 <th class="record_win_rate">勝率</th>
@@ -49,7 +49,6 @@
                     <td class="record_date"><a href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">
                         <fmt:formatDate value="${recordDate}" pattern="yyyy/MM/dd" />
                     </a></td>
-                    <td class="record_user"><c:out value="${record.user.name}" /></td>
                     <td class="record_game"><c:out value="${record.game.name}" /></td>
                     <td class="record_mode"><c:out value="${record.mode.name}" /></td>
                     <td class="record_win_rate"><fmt:formatNumber value="${record.winRate}" pattern="0.00" />%</td>
@@ -73,7 +72,7 @@
                                 <c:out value="${i}" />
                             </c:when>
                             <c:otherwise>
-                                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>
+                                <a href="<c:url value='?action=${actRecord}&command=${commMypage}&page=${i}' />"><c:out value="${i}" /></a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

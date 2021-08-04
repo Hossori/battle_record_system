@@ -49,16 +49,25 @@
             </c:forEach>
         </table>
 
-        <div class="pagenation">
+        <div class="pagination">
             全 <c:out value="${game_count}" /> 件<br />
-            <c:forEach var="i" begin="1" end="${(game_count-1)/maxRow+1}" step="1">
-                <c:choose>
-                    <c:when test="${i == page}"><c:out value="${i}" /></c:when>
-                    <c:otherwise><a href="<c:url value='?action=${actGame}&command=${commIdx}&page=${i}' />">
-                        <c:out value="${i}" />
-                    </a></c:otherwise>
-                </c:choose>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${game_count == 0}">
+                    1
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="i" begin="1" end="${(game_count-1)/maxRow+1}" step="1">
+                        <c:choose>
+                            <c:when test="${page == i}">
+                                <c:out value="${i}" />
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<c:url value='?action=${actGame}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <script>

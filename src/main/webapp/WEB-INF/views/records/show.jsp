@@ -18,9 +18,9 @@
                 <td class="record_user"><c:out value="${record.user.name}" /></td>
             </tr>
             <tr>
-                <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm" var="recordDatetime" type="date" />
+                <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm" var="recordDatetime" type="both" />
                 <th class="record_datetime">日時</th>
-                <td class="record_datetime"><fmt:formatDate value="${recordDatetime}" pattern="yyyy-MM-dd HH:mm" /></td>
+                <td class="record_datetime"><fmt:formatDate value="${recordDatetime}" pattern="yyyy/MM/dd HH:mm" /></td>
             </tr>
             <tr>
                 <th class="record_game">ゲーム</th>
