@@ -5,14 +5,15 @@
 <%@ page import="constants.AttributeConst" %>
 
 <c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
+<c:set var="actRecord" value="${ForwardConst.ACT_RECORD.getValue()}" />
 <c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commEntry" value="${ForwardConst.CMD_ENTRY.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
-    <c:param name="title">マイページ</c:param>
+    <c:param name="title"><c:out value="${user.name}" />の戦績</c:param>
     <c:param name="content">
-        <form method="POST" action="<c:url value='?action=${actRecord}&command=${commMypage}' />">
+        <form method="POST" action="<c:url value='?action=${actUser}&command=${commMypage}' />">
             <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label><br />
             <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
                 <option value=0 label="全て" />
@@ -31,9 +32,41 @@
             </select>
             <br />
 
+            <input type="hidden" name="${AttributeConst.USER_ID.getValue()}" value="${user.id}">
+
             <button type="submit">戦績表示</button>
         </form>
-        <a href="<c:url value='?action=${actRecord}&command=${commEntry}' />">戦績登録</a>
+
+        <c:if test="${user.id == sessionScope.login_user.id}">
+            <a href="<c:url value='?action=${actRecord}&command=${commEntry}' />">戦績登録</a>
+        </c:if>
+
+        <table>
+            <tr>
+                <th>勝率</th>
+                <td><fmt:formatNumber value="${total.win_rate}" pattern="0.00" />&nbsp;%</td>
+            </tr>
+            <tr>
+                <th>ポイント</th>
+                <td><c:out value="${total.point}" />&nbsp;pt</td>
+            </tr>
+        </table>
+
+        勝敗
+        <table>
+            <tr>
+                <th>対戦数</th>
+                <th>勝利</th>
+                <th>敗北</th>
+                <th>引分</th>
+            </tr>
+            <tr>
+                <td><c:out value="${total.count}" /></td>
+                <td><c:out value="${total.win}" /></td>
+                <td><c:out value="${total.lose}" /></td>
+                <td><c:out value="${total.draw}" /></td>
+            </tr>
+        </table>
 
         <table>
             <tr>
@@ -42,6 +75,7 @@
                 <th class="record_mode">モード</th>
                 <th class="record_win_rate">勝率</th>
                 <th class="record_point">ポイント</th>
+                <th class="record_memo">メモ</th>
             </tr>
             <c:forEach var="record" items="${records}">
                 <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm" var="recordDate" type="date" />
@@ -55,6 +89,7 @@
                     <td class="record_point">
                         <c:if test="${record.point != null}"><c:out value="${record.point}" />pt</c:if>
                     </td>
+                    <td class="record_memo"><c:if test="${record.memo != null}">あり</c:if></td>
                 </tr>
             </c:forEach>
         </table>

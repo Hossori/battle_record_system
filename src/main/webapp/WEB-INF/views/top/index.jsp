@@ -5,7 +5,9 @@
 <%@ page import="constants.AttributeConst" %>
 
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
+<c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
 <c:set var="actRecord" value="${ForwardConst.ACT_RECORD.getValue()}" />
+<c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
@@ -49,7 +51,18 @@
                     <td class="record_date"><a href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">
                         <fmt:formatDate value="${recordDate}" pattern="yyyy/MM/dd" />
                     </a></td>
-                    <td class="record_user"><c:out value="${record.user.name}" /></td>
+                    <td class="record_user">
+                        <c:choose>
+                            <c:when test="${record.user.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                                <a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${record.user.id}' />">
+                                   <c:out value="${record.user.name}" />
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="${record.user.name}" />
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td class="record_game"><c:out value="${record.game.name}" /></td>
                     <td class="record_mode"><c:out value="${record.mode.name}" /></td>
                     <td class="record_win_rate"><fmt:formatNumber value="${record.winRate}" pattern="0.00" />%</td>

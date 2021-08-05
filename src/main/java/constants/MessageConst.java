@@ -22,7 +22,8 @@ public enum MessageConst {
     E_NO_MODENAME("モード名を入力してください。"),
     S_MODE_DESTROY("モードを削除しました。"),
     S_RECORD_CREATE("戦績を登録しました。"),
-    S_RECORD_UPDATE("戦績を編集しました。");
+    S_RECORD_UPDATE("戦績を編集しました。"),
+    E_NO_EXIST_USER("存在しないユーザーです。");
 
     /*
      * 文字列

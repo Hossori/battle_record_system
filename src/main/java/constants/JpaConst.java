@@ -130,6 +130,7 @@ public interface JpaConst {
     String Q_RECORD_GET_BY_USER_AND_GAME = ENTITY_RECORD + ".getByUserAndGame";
     String Q_RECORD_GET_BY_USER_AND_GAME_DEF =
         "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARAM_USER
+                               + " AND r.game = :" + JPQL_PARAM_GAME
                                + " ORDER BY r.datetime DESC";
 
     //ユーザー・ゲーム・モードを指定し、戦績を日時の新しい順で取得

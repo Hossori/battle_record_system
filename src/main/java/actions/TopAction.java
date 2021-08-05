@@ -70,6 +70,8 @@ public class TopAction extends ActionBase {
             count = 0;
         }
 
+        moveErrors();
+
         List<Game> games = gameService.getAll();
 
         setRequestParam(AttributeConst.GAMES, games);

@@ -30,11 +30,13 @@ public enum AttributeConst {
     LOGIN_USER("login_user"),
 
     //マイページ
-    TOTAL_WIN_RATE("total_win_rate"),
-    TOTAL_WIN("total_win"),
-    TOTAL_LOSE("total_lose"),
-    TOTAL_DRAW("total_draw"),
-    TOTAL_POINT("total_point"),
+    TOTAL("total"),
+    WIN_RATE("win_rate"),
+    WIN("win"),
+    LOSE("lose"),
+    DRAW("draw"),
+    POINT("point"),
+    COUNT("count"),
 
     //ユーザー
     USER("user"),

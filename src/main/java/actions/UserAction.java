@@ -1,13 +1,17 @@
 package actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import constants.PropertyConst;
 import models.Game;
 import models.Mode;
@@ -43,7 +47,24 @@ public class UserAction extends ActionBase {
 
     //マイページの表示
     public void mypage() throws ServletException, IOException {
-        User loginUser = getSessionParam(AttributeConst.LOGIN_USER);
+
+        int userId = toNumber(getRequestParam(AttributeConst.USER_ID));
+        User u;
+        if(userId == Integer.MIN_VALUE) {
+            u = getSessionParam(AttributeConst.LOGIN_USER);
+        } else {
+            u = service.getById(userId);
+            //ユーザーが存在しないあるいは削除済みの場合
+            if(u == null || u.getDeleteFlag() == JpaConst.USER_DELETE_FLAG_TRUE) {
+                List<String> errors = new ArrayList<>();
+                errors.add(MessageConst.E_NO_EXIST_USER.getMessage());
+                setSessionParam(AttributeConst.ERRORS, errors);
+
+                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
+                return;
+            }
+        }
+
         List<Game> games = gameService.getAll();
 
         List<Record> records;
@@ -52,17 +73,17 @@ public class UserAction extends ActionBase {
         int game_id = toNumber(getRequestParam(AttributeConst.GAME_ID));
         int mode_id = toNumber(getRequestParam(AttributeConst.MODE_ID));
         if(game_id <= 0) { //ゲームにつき未選択又は「全て」を選択
-            records = recordService.getByUserPerPage(loginUser, page);
+            records = recordService.getByUserPerPage(u, page);
             modes = null;
         } else {
             Game g = gameService.getById(game_id);
 
             if(mode_id <= 0) { //モードにつき未選択又は「全て」を選択
-                records = recordService.getByUserAndGamePerPage(loginUser, g, page);
+                records = recordService.getByUserAndGamePerPage(u, g, page);
 
             } else { //ゲーム及びモードを選択済み
                 Mode m = modeService.getById(mode_id);
-                records = recordService.getByUserAndGameAndModePerPage(loginUser, g, m, page);
+                records = recordService.getByUserAndGameAndModePerPage(u, g, m, page);
 
             }
 
@@ -75,18 +96,58 @@ public class UserAction extends ActionBase {
             count = 0;
         }
 
+        Map<String, Object> total = getTotal(records);
+
         moveFlush();
 
+        setRequestParam(AttributeConst.USER, u);
         setRequestParam(AttributeConst.RECORDS, records);
         setRequestParam(AttributeConst.RECORD_COUNT, count);
+        setRequestParam(AttributeConst.PAGE, page);
+        setRequestParam(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);
         setRequestParam(AttributeConst.GAMES, games);
         setRequestParam(AttributeConst.MODES, modes);
         setRequestParam(AttributeConst.GAME_ID_SELECTED, game_id);
         setRequestParam(AttributeConst.MODE_ID_SELECTED, mode_id);
-
-        //setRequestParam(AttributeConst, );
+        setRequestParam(AttributeConst.TOTAL, total);
 
         forward(ForwardConst.FW_USER_MYPAGE);
+    }
+
+    private Map<String, Object> getTotal(List<Record> records) {
+        Map<String, Object> total = new HashMap<>();
+
+        Integer count = 0;
+        Integer win = 0;
+        Integer lose = 0;
+        Integer draw = 0;
+        Integer point = 0;
+
+        for(Record r:records) {
+            win += r.getWin();
+            lose += r.getLose();
+            draw += r.getDraw();
+            count += (win+lose+draw);
+            if(r.getPoint() != null) {point += r.getPoint();}
+        }
+
+        total.put(AttributeConst.WIN.getValue(), win);
+        total.put(AttributeConst.LOSE.getValue(), lose);
+        total.put(AttributeConst.DRAW.getValue(), draw);
+        total.put(AttributeConst.COUNT.getValue(), count);
+        total.put(AttributeConst.POINT.getValue(), point);
+
+        Double winRate = 0.0;
+        if(win + lose == 0) {
+            if(0 < draw) {
+                winRate = 50.0;
+            }
+        } else {
+            winRate = (double)win / (win+lose) * 100;
+        }
+        total.put(AttributeConst.WIN_RATE.getValue(), winRate);
+
+        return total;
     }
 
     //新規登録フォームの表示

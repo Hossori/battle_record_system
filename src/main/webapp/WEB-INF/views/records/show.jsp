@@ -6,6 +6,7 @@
 
 <c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
 <c:set var="actRecord" value="${ForwardConst.ACT_RECORD.getValue()}" />
+<c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
@@ -15,7 +16,18 @@
         <table>
             <tr>
                 <th class="record_user">ユーザー</th>
-                <td class="record_user"><c:out value="${record.user.name}" /></td>
+                <c:choose>
+                    <c:when test="${record.user.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                        <td class="record_user">
+                            <a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${record.user.id}' />">
+                                <c:out value="${record.user.name}" />
+                            </a>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td class="record_user"><c:out value="${record.user.name}" /></td>
+                    </c:otherwise>
+                </c:choose>
             </tr>
             <tr>
                 <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm" var="recordDatetime" type="both" />
