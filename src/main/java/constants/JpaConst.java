@@ -10,6 +10,7 @@ public interface JpaConst {
 
     //データ取得件数の最大値
     int ROW_PER_PAGE = 10; //1ページに表示するレコードの数
+    int PAGE_PER_PAGE = 10; //ページネーションに表示するページの最大数
 
     //テーブル
     String TABLE_USER = "users";

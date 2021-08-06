@@ -43,7 +43,7 @@ public class User {
     @Column(name=JpaConst.USER_COL_EMAIL, nullable=false)
     private String email; //メールアドレス
 
-    @Column(name=JpaConst.USER_COL_NAME, nullable=false)
+    @Column(name=JpaConst.USER_COL_NAME, nullable=false, length=20)
     private String name; // ユーザーネーム
 
     @Column(name=JpaConst.USER_COL_PASS, nullable=false, length=64)

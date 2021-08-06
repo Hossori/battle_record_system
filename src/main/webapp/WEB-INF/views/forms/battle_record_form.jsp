@@ -18,7 +18,9 @@
 <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label>
 <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
     <c:forEach var="game" items="${games}">
-        <option value="${game.id}" label="${game.name}" <c:if test="${game.id == record.game.id}">selected</c:if> />
+        <c:if test="${game.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+            <option value="${game.id}" label="${game.name}" <c:if test="${game.id == record.game.id}">selected</c:if> />
+        </c:if>
     </c:forEach>
 </select>
 <br />
@@ -31,7 +33,9 @@
 <label for="${AttributeConst.MODE_ID.getValue()}">モード</label>
 <select id="mode_list" name="${AttributeConst.MODE_ID.getValue()}">
     <c:forEach var="mode" items="${modes}">
-        <option value="${mode.id}" label="${mode.name}" <c:if test="${mode.id == record.mode.id}">selected</c:if> />
+        <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+            <option value="${mode.id}" label="${mode.name}" <c:if test="${mode.id == record.mode.id}">selected</c:if> />
+        </c:if>
     </c:forEach>
 </select>
 <br />

@@ -12,33 +12,41 @@
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
-    <c:param name="title">みんなの戦績</c:param>
+    <c:param name="title">戦績一覧</c:param>
     <c:param name="content">
         <form method="POST" action="<c:url value='?action=${actTop}&command=${commIdx}' />">
-            <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label><br />
-            <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
-                <option value=0 label="全て" />
-                <c:forEach var="game" items="${games}">
-                    <option value="${game.id}" label="${game.name}" <c:if test='${game.id == game_id_selected}'>selected</c:if> />
-                </c:forEach>
-            </select>
-            <br />
+            <section class="form-list">
+                <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label>
+                <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
+                    <option value=0 label="全て" />
+                    <c:forEach var="game" items="${games}">
+                        <c:if test="${game.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                            <option value="${game.id}" label="${game.name}" <c:if test='${game.id == game_id_selected}'>selected</c:if> />
+                        </c:if>
+                    </c:forEach>
+                </select>
+            </section>
 
-            <label for="${AttributeConst.MODE_ID.getValue()}">モード</label><br />
-            <select id="mode_list" name="${AttributeConst.MODE_ID.getValue()}">
-                <option value=0 label="全て" />
-                <c:forEach var="mode" items="${modes}">
-                    <option value="${mode.id}" label="${mode.name}" <c:if test='${mode.id == mode_id_selected}'>selected</c:if> />
-                </c:forEach>
-            </select>
-            <br />
+            <section class="form-list">
+                <label for="${AttributeConst.MODE_ID.getValue()}">モード</label>
+                <select id="mode_list" name="${AttributeConst.MODE_ID.getValue()}">
+                    <option value=0 label="全て" />
+                    <c:forEach var="mode" items="${modes}">
+                        <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                            <option value="${mode.id}" label="${mode.name}" <c:if test='${mode.id == mode_id_selected}'>selected</c:if> />
+                        </c:if>
+                    </c:forEach>
+                </select>
+            </section>
 
-            <button type="submit">戦績表示</button>
+            <section class="form-button">
+                <p class="btn" onclick="document.forms[0].submit();">戦績表示</p>
+            </section>
         </form>
 
-        <table>
+        <table class="record-table">
             <tr>
-                <th class="record_date">日付</th>
+                <th class="record_date">戦績</th>
                 <th class="record_user">ユーザー</th>
                 <th class="record_game">ゲーム</th>
                 <th class="record_mode">モード</th>
@@ -75,23 +83,16 @@
 
         <div class="pagination">
             全 <c:out value="${record_count}" /> 件<br />
-            <c:choose>
-                <c:when test="${record_count == 0}">
-                    1
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="i" begin="1" end="${(record_count-1)/maxRow+1}" step="1">
-                        <c:choose>
-                            <c:when test="${page == i}">
-                                <c:out value="${i}" />
-                            </c:when>
-                            <c:otherwise>
-                                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
+            <c:forEach var="i" begin="${page_begin}" end="${page_end}" step="1">
+                <c:choose>
+                    <c:when test="${page == i}">
+                        <c:out value="${i}" />
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
         </div>
 
         <script type="text/javascript">

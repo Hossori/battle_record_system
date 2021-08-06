@@ -27,66 +27,75 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/jquery.datetimepicker.css">
     </head>
     <body>
-        <header>
-            <div class="header-left">
-                <div class="header-logo">
-                    <a href="<c:url value='?action=${actTop}&command=${commIdx}' />">戦績管理システム</a>
-                </div>
-                <div class="header-menu">
-                    <ul>
-                        <li><a href="<c:url value='?action=${actTop}&command=${commIdx}' />">トップ</a></li>
+        <div class="container">
+            <header>
+                <div class="header-left">
+                    <div class="header-logo">
+                        <a href="<c:url value='?action=${actTop}&command=${commIdx}' />">戦績管理システム</a>
+                    </div>
+                    <nav class="header-menu">
+                        <ul>
+                            <li><a href="<c:url value='?action=${actTop}&command=${commIdx}' />">トップ</a></li>
 
-                        <c:if test="${sessionScope.login_user != null}">
-                            <li><a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${sessionScope.login_user.id}' />">マイページ</a></li>
+                            <c:if test="${sessionScope.login_user != null}">
+                                <li><a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${sessionScope.login_user.id}' />">マイページ</a></li>
 
-                            <c:if test="${sessionScope.login_user.adminFlag == AttributeConst.ADMIN_TRUE.getIntegerValue()}">
-                                <li><a href="<c:url value='?action=${actGame}&command=${commIdx}' />">ゲーム管理</a></li>
+                                <c:if test="${sessionScope.login_user.adminFlag == AttributeConst.ADMIN_TRUE.getIntegerValue()}">
+                                    <li><a href="<c:url value='?action=${actGame}&command=${commIdx}' />">ゲーム管理</a></li>
+                                </c:if>
                             </c:if>
-                        </c:if>
-                    </ul>
+                        </ul>
+                    </nav>
                 </div>
+                <div class="header-right">
+                    <nav class="header-menu">
+                        <ul>
+                            <c:choose>
+                                <c:when test="${sessionScope.login_user == null}">
+                                    <li><a href="<c:url value='?action=${actAuth}&command=${commLoginForm}' />">ログイン</a></li>
+                                    <li><a href="<c:url value='?action=${actUser}&command=${commEntry}' />">新規登録</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="#" onclick="confirmLogout();">ログアウト</a></li>
+                                    <li><a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${sessionScope.login_user.id}' />">
+                                        <c:out value="${sessionScope.login_user.name}" />
+                                    </a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <div id="main">
+                <c:if test="${flush != null}">
+                    <div id="flush"><c:out value='${flush}' /></div>
+                </c:if>
+                <c:if test="${errors != null}">
+                    <div id="errors">
+                        <c:forEach var="error" items="${errors}">
+                           <c:out value="${error}" /><br/>
+                        </c:forEach>
+                    </div>
+                </c:if>
+
+                <h2 id="title"><c:out value="${param.title}" /></h2>
+
+                <div id="content">${param.content}</div>
             </div>
-            <div class="header-right">
-                <div class="header-menu">
-                    <ul>
-                        <c:choose>
-                            <c:when test="${sessionScope.login_user == null}">
-                                <li><a href="<c:url value='?action=${actAuth}&command=${commLoginForm}' />">ログイン</a></li>
-                                <li><a href="<c:url value='?action=${actUser}&command=${commEntry}' />">新規登録</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="<c:url value='?action=${actAuth}&command=${commLogout}' />">ログアウト</a></li>
-                                <li><a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${sessionScope.login_user.id}' />">
-                                    <c:out value="${sessionScope.login_user.name}" />
-                                </a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </header>
 
-        <div id="main">
-            <c:if test="${flush != null}">
-                <div id="flush"><c:out value='${flush}' /></div>
-            </c:if>
-            <c:if test="${errors != null}">
-                <div id="errors">
-                    <c:forEach var="error" items="${errors}">
-                       <c:out value="${error}" /><br/>
-                    </c:forEach>
-                </div>
-            </c:if>
-
-            <h2 id="title"><c:out value="${param.title}" /></h2>
-
-            <div id="content">${param.content}</div>
+            <footer>
+                <div class="footer-right">© 2021 Hossori</div>
+                <div class="clear"></div>
+            </footer>
         </div>
 
-        <footer>
-            <div class="footer-right">© 2021 Hossori</div>
-            <div class="clear"></div>
-        </footer>
+        <script>
+            function confirmLogout() {
+                if(confirm("ログアウトしますか？")) {
+                    location.href="<c:url value='?action=${actAuth}&command=${commLogout}' />";
+                }
+            }
+        </script>
     </body>
 </html>

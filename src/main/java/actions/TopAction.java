@@ -41,6 +41,7 @@ public class TopAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
         int page = getPage();
+        int maxRow = JpaConst.ROW_PER_PAGE;
 
         List<Record> records;
         List<Mode> modes;
@@ -74,14 +75,20 @@ public class TopAction extends ActionBase {
 
         List<Game> games = gameService.getAll();
 
+        int[] pagination = getPagination(count, page);
+        int page_begin = pagination[0];
+        int page_end = pagination[1];
+
         setRequestParam(AttributeConst.GAMES, games);
         setRequestParam(AttributeConst.MODES, modes);
         setRequestParam(AttributeConst.RECORDS, records);
         setRequestParam(AttributeConst.RECORD_COUNT, count);
         setRequestParam(AttributeConst.PAGE, page);
-        setRequestParam(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);
+        setRequestParam(AttributeConst.MAX_ROW, maxRow);
         setRequestParam(AttributeConst.GAME_ID_SELECTED, game_id);
         setRequestParam(AttributeConst.MODE_ID_SELECTED, mode_id);
+        setRequestParam(AttributeConst.PAGE_BEGIN, page_begin);
+        setRequestParam(AttributeConst.PAGE_END, page_end);
 
         forward(ForwardConst.FW_TOP_INDEX);
     }

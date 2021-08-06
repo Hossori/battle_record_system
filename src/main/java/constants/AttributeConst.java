@@ -13,6 +13,8 @@ public enum AttributeConst {
     //一覧画面共通
     MAX_ROW("maxRow"),
     PAGE("page"),
+    PAGE_BEGIN("page_begin"),
+    PAGE_END("page_end"),
 
     //入力フォーム共通
     TOKEN("_token"),

@@ -117,6 +117,39 @@ public abstract class ActionBase {
     }
 
     /*
+     * paginationに表示する[開始ページ,終了ページ]の配列を返す
+     * @param count 表示するアイテムの全件数
+     * @param page 表示するページ
+     */
+    protected int[] getPagination(int count, int page) {
+        int maxPage = JpaConst.PAGE_PER_PAGE;
+        int maxRow = JpaConst.ROW_PER_PAGE;
+        int page_begin;
+        int page_end;
+
+        if(count == 0) {
+            page_begin = 1;
+            page_end = 1;
+        } else if(maxPage < (count-1)/maxRow+1) {
+            if(page < maxPage/2) {
+                page_begin = 1;
+                page_end = maxPage;
+            } else if(maxPage/2 < page) {
+                page_begin = page - maxPage/2-1;
+                page_end = page + maxPage/2;
+            } else {
+                page_begin = 1;
+                page_end = page + (maxPage/2);
+            }
+        } else {
+            page_begin = 1;
+            page_end = (count-1)/maxRow+1;
+        }
+
+        return new int[]{page_begin, page_end};
+    }
+
+    /*
      * CSRF対策 token不正の場合はエラー画面を表示
      * @return true: token有効 false: token不正
      * @throws ServletException, IOException

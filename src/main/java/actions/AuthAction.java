@@ -55,7 +55,7 @@ public class AuthAction extends ActionBase {
         } else {
             if(checkToken()) {
                 setSessionParam(AttributeConst.LOGIN_USER, u);
-                forward(ForwardConst.ACT_USER, ForwardConst.CMD_MYPAGE);
+                redirect(ForwardConst.ACT_USER, ForwardConst.CMD_MYPAGE);
             }
         }
     }

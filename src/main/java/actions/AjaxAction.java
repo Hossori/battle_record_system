@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import constants.JpaConst;
 import models.Game;
 import models.Mode;
 import services.GameService;
@@ -44,6 +45,8 @@ public class AjaxAction extends ActionBase {
 
         JSONArray modesJSON = new JSONArray();
         for(Mode m:modeList) {
+            if(m.getDeleteFlag() == JpaConst.MODE_DELETE_FLAG_TRUE) {continue;}
+
             JSONObject modeJSON = new JSONObject();
             modeJSON.put("id", m.getId());
             modeJSON.put("name", m.getName());
