@@ -65,7 +65,8 @@ public class LoginFilter implements Filter {
                     !(ForwardConst.ACT_USER.getValue().equals(action) &&
                        (ForwardConst.CMD_ENTRY.getValue().equals(command) ||
                         ForwardConst.CMD_CREATE.getValue().equals(command) ||
-                        ForwardConst.CMD_SHOW.getValue().equals(command))
+                        ForwardConst.CMD_SHOW.getValue().equals(command) ||
+                        ForwardConst.CMD_MYPAGE.getValue().equals(command))
                     ) &&
                     !(ForwardConst.ACT_RECORD.getValue().equals(action) &&
                        (ForwardConst.CMD_INDEX.getValue().equals(command) ||

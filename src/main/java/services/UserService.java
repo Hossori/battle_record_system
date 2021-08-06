@@ -2,6 +2,7 @@ package services;
 
 import javax.persistence.NoResultException;
 
+import constants.AttributeConst;
 import constants.JpaConst;
 import models.User;
 import utils.EncryptUtil;
@@ -68,6 +69,31 @@ public class UserService extends ServiceBase {
     public void create(User u) {
         em.getTransaction().begin();
         em.persist(u);
+        em.getTransaction().commit();
+    }
+
+    /*
+     * ユーザー情報の更新
+     */
+    public void update(User u, User update_u) {
+        em.getTransaction().begin();
+
+        u.setName(update_u.getName());
+        String email = update_u.getEmail();
+        if(email != null) {u.setEmail(email);}
+        String pass = update_u.getPassword();
+        if(pass != null) {u.setPassword(pass);}
+        u.setIntroduction(update_u.getIntroduction());
+
+        em.getTransaction().commit();
+    }
+
+    /*
+     * ユーザーの論理削除
+     */
+    public void destroy(User u) {
+        em.getTransaction().begin();
+        u.setDeleteFlag(AttributeConst.DELETE_TRUE.getIntegerValue());
         em.getTransaction().commit();
     }
 }

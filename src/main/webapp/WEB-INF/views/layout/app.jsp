@@ -12,6 +12,7 @@
 <c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEntry" value="${ForwardConst.CMD_ENTRY.getValue()}" />
+<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -34,8 +35,10 @@
                 <div class="header-menu">
                     <ul>
                         <li><a href="<c:url value='?action=${actTop}&command=${commIdx}' />">トップ</a></li>
-                        <li><a href="<c:url value='?action=${actUser}&command=${commMypage}' />">マイページ</a></li>
+
                         <c:if test="${sessionScope.login_user != null}">
+                            <li><a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${sessionScope.login_user.id}' />">マイページ</a></li>
+
                             <c:if test="${sessionScope.login_user.adminFlag == AttributeConst.ADMIN_TRUE.getIntegerValue()}">
                                 <li><a href="<c:url value='?action=${actGame}&command=${commIdx}' />">ゲーム管理</a></li>
                             </c:if>
@@ -53,7 +56,7 @@
                             </c:when>
                             <c:otherwise>
                                 <li><a href="<c:url value='?action=${actAuth}&command=${commLogout}' />">ログアウト</a></li>
-                                <li><a href="<c:url value='?action=${actUser}&command=${commMypage}' />">
+                                <li><a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${sessionScope.login_user.id}' />">
                                     <c:out value="${sessionScope.login_user.name}" />
                                 </a></li>
                             </c:otherwise>

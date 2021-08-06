@@ -1,7 +1,6 @@
 package actions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import javax.servlet.ServletException;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
-import constants.MessageConst;
 import constants.PropertyConst;
 import models.Game;
 import models.Mode;
@@ -50,19 +48,16 @@ public class UserAction extends ActionBase {
 
         int userId = toNumber(getRequestParam(AttributeConst.USER_ID));
         User u;
-        if(userId == Integer.MIN_VALUE) {
+        if(userId == Integer.MIN_VALUE) { //user_idのパラメータない場合
             u = getSessionParam(AttributeConst.LOGIN_USER);
         } else {
             u = service.getById(userId);
-            //ユーザーが存在しないあるいは削除済みの場合
-            if(u == null || u.getDeleteFlag() == JpaConst.USER_DELETE_FLAG_TRUE) {
-                List<String> errors = new ArrayList<>();
-                errors.add(MessageConst.E_NO_EXIST_USER.getMessage());
-                setSessionParam(AttributeConst.ERRORS, errors);
+        }
 
-                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
-                return;
-            }
+        //ユーザーが存在しないあるいは削除済みの場合はエラー画面に遷移
+        if(u == null || u.getDeleteFlag() == JpaConst.USER_DELETE_FLAG_TRUE) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
         }
 
         List<Game> games = gameService.getAll();
@@ -198,10 +193,83 @@ public class UserAction extends ActionBase {
 
             setSessionParam(AttributeConst.LOGIN_USER, u);
 
-            redirect(ForwardConst.ACT_USER, ForwardConst.CMD_MYPAGE);
+            setRequestParam(AttributeConst.USER_ID, u.getId());
+            forward(ForwardConst.ACT_USER, ForwardConst.CMD_MYPAGE);
         }
     }
 
+    //ユーザーページ
+    public void show() throws ServletException, IOException {
 
+        User u = service.getById(toNumber(getRequestParam(AttributeConst.USER_ID)));
+        if(u == null || u.getDeleteFlag() == JpaConst.USER_DELETE_FLAG_TRUE) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
 
+        setRequestParam(AttributeConst.USER, u);
+
+        forward(ForwardConst.FW_USER_SHOW);
+    }
+
+    //ユーザー情報の編集
+    public void edit() throws ServletException, IOException {
+
+        User u = getSessionParam(AttributeConst.LOGIN_USER);
+
+        setRequestParam(AttributeConst.USER, u);
+        setRequestParam(AttributeConst.TOKEN, getTokenId());
+
+        moveErrors();
+
+        forward(ForwardConst.FW_USER_EDIT);
+    }
+
+    public void update() throws ServletException, IOException {
+
+        if(checkToken()) {
+
+            User loginUser = getSessionParam(AttributeConst.LOGIN_USER);
+            User u = service.getById(loginUser.getId()); //更新用のEntityを取得する
+            String email = getRequestParam(AttributeConst.USER_EMAIL);
+            String pass = getRequestParam(AttributeConst.USER_PASS);
+            if(email == null || email.equals("")) {email = null;}
+            if(pass == null || pass.equals("")) {pass = null;}
+            User update_u = new User(
+                                null,
+                                email,
+                                getRequestParam(AttributeConst.USER_NAME),
+                                pass,
+                                getRequestParam(AttributeConst.USER_INTRODUCTION),
+                                null,
+                                null
+                            );
+            List<String> errors = UserValidator.validate(update_u);
+            if(0 < errors.size()) {
+                setSessionParam(AttributeConst.ERRORS, errors);
+                redirect(ForwardConst.ACT_USER, ForwardConst.CMD_EDIT);
+            } else {
+                service.update(u, update_u);
+
+                //セッションスコープのログインユーザーに更新後のEntityを入れる
+                loginUser = service.getById(loginUser.getId());
+                setSessionParam(AttributeConst.LOGIN_USER, loginUser);
+
+                setRequestParam(AttributeConst.USER_ID, u.getId());
+                forward(ForwardConst.ACT_USER, ForwardConst.CMD_SHOW);
+            }
+        }
+    }
+
+    public void destroy() throws ServletException, IOException {
+
+        if(checkToken()) {
+
+            User u = getSessionParam(AttributeConst.LOGIN_USER);
+
+            service.destroy(u);
+
+            redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_LOGOUT);
+        }
+    }
 }

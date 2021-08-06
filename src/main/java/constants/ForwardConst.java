@@ -36,6 +36,8 @@ public enum ForwardConst {
     FW_LOGIN("auth/login"),
     FW_USER_MYPAGE("users/mypage"),
     FW_USER_ENTRY("users/entry"),
+    FW_USER_SHOW("users/show"),
+    FW_USER_EDIT("users/edit"),
     FW_GAME_INDEX("games/index"),
     FW_GAME_EDIT("games/edit"),
     FW_RECORD_SHOW("records/show"),

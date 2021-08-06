@@ -54,7 +54,7 @@
                     <td class="record_user">
                         <c:choose>
                             <c:when test="${record.user.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
-                                <a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${record.user.id}' />">
+                                <a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${record.user.id}' />">
                                    <c:out value="${record.user.name}" />
                                 </a>
                             </c:when>

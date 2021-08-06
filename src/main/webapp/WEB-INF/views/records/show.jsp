@@ -9,6 +9,7 @@
 <c:set var="commMypage" value="${ForwardConst.CMD_MYPAGE.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
+<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="title">戦績詳細</c:param>
@@ -19,7 +20,7 @@
                 <c:choose>
                     <c:when test="${record.user.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
                         <td class="record_user">
-                            <a href="<c:url value='?action=${actUser}&command=${commMypage}&user_id=${record.user.id}' />">
+                            <a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${record.user.id}' />">
                                 <c:out value="${record.user.name}" />
                             </a>
                         </td>
@@ -62,7 +63,7 @@
             </tr>
             <tr>
                 <th class="record_memo">メモ</th>
-                <td class="record_memo"><c:out value="${record.memo}" /></td>
+                <td class="record_memo"><pre><c:out value="${record.memo}" /></pre></td>
             </tr>
         </table>
 

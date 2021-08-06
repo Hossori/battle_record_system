@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constants.MessageConst;
+import models.User;
 import services.UserService;
 
 public class UserValidator {
@@ -27,6 +28,22 @@ public class UserValidator {
         validateEmail(errors, email, true);
         validateName(errors, name);
         validatePass(errors, plainPass);
+
+        return errors;
+    }
+
+    //ユーザー情報の更新
+    public static List<String> validate(User u) {
+        List<String> errors = new ArrayList<>();
+        service = new UserService();
+
+        String email = u.getEmail();
+        if(email != null && !email.equals("")) {
+            validateEmail(errors, email, true);
+        }
+
+        String name = u.getName();
+        validateName(errors, name);
 
         return errors;
     }
