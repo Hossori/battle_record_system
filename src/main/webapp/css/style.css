@@ -8,15 +8,7 @@
     font-size:36px;
     font-weight: bold;
     margin: 15px 0px;
-}
-
-#flush {
-    display:inline-block;
-    width: auto;
-    font-size:18px;
-    padding:12px 24px;
-    border:1px solid;
-    border-radius:4px;
+    text-shadow: 1px 2px 1px gray;
 }
 
 .container {
@@ -45,6 +37,7 @@ nav.header-menu a {
     margin:8px;
     text-decoration:none;
     color:white;
+    font-weight: bold;
     opacity: 0.8;
 }
 
@@ -79,42 +72,157 @@ div.footer-right {
     margin:12px;
 }
 
-/* form */
-form {
-    display: flex;
-    flex-direction: column;
-    margin: 24px 0px;
+/* message */
+#flush {
+    display:inline-block;
+    margin-top: 12px;
+    padding:16px 24px;
+    color: green;
+    background-color: powderblue;
+    border-radius: 4px;
+}
+#errors {
+    display:inline-block;
+    margin: 12px 0;
+    padding: 16px 24px;
+    color: red;
+    background-color: pink;
+    border-radius: 4px;
 }
 
-section.form-list select {
-    width: 250px;
-    margin-bottom: 8px;
+/* preタグ */
+pre {
+    font-size: 16px;
+    font-family: "メイリオ";
 }
 
-section.form-list label {
-    margin-right: 12px;
+/* aタグ */
+a.navigate {
+    text-decoration: none;
+    cursor: pointer;
+    color: blue;
     font-weight: bold;
 }
+a.navigate:hover {
+    color: gold;
+}
 
-p.btn {
+/* pagination */
+.pagination {
+    margin-top: 12px;
+}
+
+/* ユーザー詳細ページ */
+div.user-show div {
+    margin-bottom: 20px;
+}
+div.user-show div nav {
+    display: inline-block;
+    font-weight: bold;
+    padding: 0px 8px;
+    vertical-align: top;
+}
+div.user-show div.introduction pre{
+    display: inline-block;
+    min-width: 30%;
+    border: solid 1px lightgray;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+/* game */
+section#mode-list input {
+    margin-bottom: 6px;
+}
+
+/* form */
+div.form-div div {
+    margin: 12px;
+}
+div.form-div div label{
+    font-weight: bold;
+}
+div.form-div div input{
+    width: 250px;
+}
+
+table.form-table {
+    border-collapse: separate;
+    border-spacing: 12px 12px;
+}
+table.form-table th {
+    font-weight: bold;
+    text-align: left;
+    vertical-align: top;
+}
+table.form-table td {
+    text-align: left;
+    vertical-align: top;
+}
+table.form-table tr td input {
+    width: 300px;
+}
+table.form-table tr.form-date td input {
+    width: 175px;
+}
+table.form-table tr.form-list select {
+    width: 300px;
+}
+table.form-table tr.form-win-or-lose th {
+    vertical-align: top;
+}
+table.form-table tr.form-win-or-lose td input,
+table.form-table tr.form-point td input {
+    width: 40px;
+    text-align: right;
+    padding-right: 6px;
+}
+table.form-table tr.form-point td input {
+    width: 60px;
+}
+table.form-table tr.form-memo th {
+    vertical-align: top;
+}
+table.form-table tr td textarea {
+    width: 300px;
+    height: calc(1.3em*5);
+    line-height: 1.3;
+    resize: vertical;
+}
+
+/* button */
+button {
+    /* buttonのcssをリセット */
+    border: none;
+    outline: none;
+    appearance: none;
+
     display: inline-block;
     padding: 2px 12px;
     border-radius: 4px;
     box-shadow: gray 0px 3px;
-    margin: 12px 0px;
+    margin-top: 12px;
+    margin-left: 12px;
     cursor: pointer;
     background-color: lightgray;
     color: black;
     font-weight: bold;
+    font-size: 16px;
 }
-
-p.btn:active {
+button:focus {
+    color: darkblue;
+}
+button:active {
     box-shadow: none;
     position: relative;
     top: 3px;
 }
 
 /* table */
+/* record-table */
+table.record-table {
+    margin-top: 36px;
+}
 table.record-table tr th {
     border-bottom: solid darkblue 2px;
     font-weight: bold;
@@ -129,12 +237,80 @@ table.record-table tr td {
     text-align: right;
     color: black;
 }
-table.record-table tr td.record_date a,
-table.record-table tr td.record_user a {
-    text-decoration: none;
-    font-weight: bold;
-    color: blue;
+
+/* total-calc-table */
+table.total-calc-table {
+    margin: 32px 0px;
 }
-.pagination {
-    margin-top: 12px;
+table.total-calc-table tr th,
+table.total-calc-table tr td {
+    font-weight: bold;
+}
+table.total-calc-table tr td {
+    text-align: right;
+    font-size: 20px;
+}
+table.total-calc-table tr td span {
+    font-size: 32px;
+    margin: 0px 12px;
+    color: green;
+}
+
+/* total-count-table */
+table.total-count-table {
+    margin: 32px 0px;
+    border: solid 1px black;
+}
+table.total-count-table tr {
+    border: solid 1px black;
+}
+table.total-count-table tr th,
+table.total-count-table tr td {
+    border: solid 1px black;
+    text-align: center;
+}
+table.total-count-table tr th {
+    font-weight: bold;
+    padding: 4px 12px;
+}
+table.total-count-table tr td {
+    color: green;
+    font-weight: bold;
+}
+
+/* record-show-table */
+div.record-show {
+    margin-left: 12px;
+    margin-bottom: 12px;
+}
+table.record-show-table tr {
+    vertical-align: top;
+}
+table.record-show-table tr th {
+    font-weight: bold;
+    border-bottom: solid 1px darkblue;
+    padding: 12px 12px 0px 12px;
+}
+table.record-show-table tr td {
+    border-bottom: solid 1px darkblue;
+    padding: 12px 24px 0px 12px;
+}
+
+/* game-table */
+table.game-table {
+    margin-top: 48px;
+    min-width: 400px;
+}
+table.game-table tr {
+    text-align: left;
+}
+table.game-table tr th {
+    font-weight: bold;
+    border-bottom: solid 2px darkblue;
+    padding: 0 12px 0 6px;
+}
+table.game-table tr td {
+    vertical-align: top;
+    border-bottom: solid 1px darkblue;
+    padding: 6px 12px 12px 6px;
 }

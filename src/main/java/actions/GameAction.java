@@ -40,10 +40,16 @@ public class GameAction extends ActionBase {
             List<Game> games = service.getPerPage(page);
             long gameCount = service.countAll();
 
+            int[] pagination = getPagination((int)gameCount, page);
+            int page_begin = pagination[0];
+            int page_end = pagination[1];
+
             //ページ、ゲームリスト、ゲーム数、最大表示数をセット
             setRequestParam(AttributeConst.PAGE, page);
             setRequestParam(AttributeConst.GAMES, games);
             setRequestParam(AttributeConst.GAME_COUNT, gameCount);
+            setRequestParam(AttributeConst.PAGE_BEGIN, page_begin);
+            setRequestParam(AttributeConst.PAGE_END, page_end);
             setRequestParam(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);
 
             //create用token

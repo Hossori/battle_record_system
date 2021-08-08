@@ -80,4 +80,27 @@ public class ModeAction extends ActionBase {
             }
         }
     }
+
+    public void update() throws ServletException, IOException {
+
+        if(checkAdmin() && checkToken()) {
+
+            Mode m = service.getById(toNumber(getRequestParam(AttributeConst.MODE_ID)));
+            if(m != null) {
+                String modeName = getRequestParam(AttributeConst.MODE_NAME);
+                if(modeName != null && !modeName.equals("")) {
+                    setSessionParam(AttributeConst.FLUSH, MessageConst.S_MODE_UPDATE.getMessage());
+                    service.update(m, modeName);
+                } else {
+                    List<String> errors = new ArrayList<>();
+                    errors.add(MessageConst.E_NO_MODENAME.getMessage());
+                    setSessionParam(AttributeConst.ERRORS, errors);
+                }
+
+                forward(ForwardConst.ACT_GAME, ForwardConst.CMD_EDIT);
+            } else {
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+            }
+        }
+    }
 }

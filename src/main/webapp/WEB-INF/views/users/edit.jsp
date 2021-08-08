@@ -9,35 +9,51 @@
 <c:set var="commDst" value="${ForwardConst.CMD_DESTROY.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
-    <c:param name="title"></c:param>
+    <c:param name="title">アカウント編集</c:param>
     <c:param name="content">
         <form method="POST" action="<c:url value='?action=${actUser}&command=${commUpd}' />">
-            <label for="${AttributeConst.USER_NAME.getValue()}">ユーザー名</label>
-            <input type="text" name="${AttributeConst.USER_NAME.getValue()}" value="${user.name}">
-            <br />
-
-            <label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label>
-            <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}">
-            <br />
-            <label for="${AttributeConst.USER_EMAIL.getValue()}">※変更する場合のみご入力ください</label>
-            <br />
-
-            <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label>
-            <input type="password" name="${AttributeConst.USER_PASS.getValue()}">
-            <br />
-            <label for="${AttributeConst.USER_PASS.getValue()}">※変更する場合のみご入力ください</label>
-            <br />
-
-            <label for="${AttributeConst.USER_INTRODUCTION.getValue()}">自己紹介</label>
-            <textarea name="${AttributeConst.USER_INTRODUCTION.getValue()}"><c:out value="${user.introduction}" /></textarea>
-            <br />
+            <table class="form-table">
+                <tr class="user-name">
+                    <th><label for="${AttributeConst.USER_NAME.getValue()}">ユーザー名</label></th>
+                    <td><input type="text" name="${AttributeConst.USER_NAME.getValue()}" value="${user.name}"></td>
+                </tr>
+                <tr class="user-email">
+                    <th><label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label></th>
+                    <td>
+                        <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}" placeholder="※変更する場合のみご入力ください"><br />
+                        <label class="annotation" for="${AttributeConst.USER_EMAIL.getValue()}"></label>
+                    </td>
+                </tr>
+                <tr class="user-password">
+                    <th><label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label>
+                    <td>
+                        <input type="password" name="${AttributeConst.USER_PASS.getValue()}" placeholder="※変更する場合のみご入力ください"><br />
+                        <label class="annotation" for="${AttributeConst.USER_PASS.getValue()}"></label>
+                    </td>
+                </tr>
+                <tr class="user-repassword">
+                    <th><label for="${AttributeConst.USER_REPASS.getValue()}">パスワード<br />（再入力）</label>
+                    <td>
+                        <input type="password" name="${AttributeConst.USER_REPASS.getValue()}" placeholder="※変更する場合のみご入力ください"><br />
+                        <label class="annotation" for="${AttributeConst.USER_REPASS.getValue()}"></label>
+                    </td>
+                </tr>
+                <tr class="user-introduction">
+                    <th><label for="${AttributeConst.USER_INTRODUCTION.getValue()}">自己紹介</label></th>
+                    <td><textarea name="${AttributeConst.USER_INTRODUCTION.getValue()}"><c:out value="${user.introduction}" /></textarea></td>
+                </tr>
+            </table>
 
             <input type="hidden" name="${AttributeConst.USER_ID.getValue()}" value="${user.id}">
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
 
-            <button type="submit">変更</button>
+            <button type="submit" onclick="document.forms[0].submit();">変更</button>
         </form>
-        <button onclick="confirmDestroy();">アカウントを削除する</button>
+
+        <br />
+        <br />
+
+        <a class="navigate" onclick="confirmDestroy();">アカウントを削除する</a>
 
         <script>
             function confirmDestroy() {

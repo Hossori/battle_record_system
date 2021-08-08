@@ -46,6 +46,7 @@ public enum AttributeConst {
     USER_EMAIL("user_email"),
     USER_NAME("user_name"),
     USER_PASS("user_password"),
+    USER_REPASS("user_repassword"),
     USER_INTRODUCTION("user_introduction"),
     USER_ADMIN_FLAG("user_admin_flag"),
     USER_DELETE_FLAG("user_delete_flag"),

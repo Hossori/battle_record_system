@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
+import constants.JpaConst;
 import constants.MessageConst;
 import models.Game;
 import models.Mode;
@@ -70,13 +71,20 @@ public class RecordAction extends ActionBase {
     public void create() throws ServletException, IOException {
 
         if(checkToken()) {
+            Game g = gameService.getById(toNumber(getRequestParam(AttributeConst.GAME_ID)));
+            Mode m = modeService.getById(toNumber(getRequestParam(AttributeConst.MODE_ID)));
+            if(g.getDeleteFlag() == JpaConst.GAME_DELETE_FLAG_TRUE ||
+               m.getDeleteFlag() == JpaConst.MODE_DELETE_FLAG_TRUE) {
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+                return;
+            }
 
             Record r = new Record(
                                 null,
                                 toLocalDateTime(getRequestParam(AttributeConst.RECORD_DATETIME)),
                                 getSessionParam(AttributeConst.LOGIN_USER),
-                                gameService.getById(toNumber(getRequestParam(AttributeConst.GAME_ID))),
-                                modeService.getById(toNumber(getRequestParam(AttributeConst.MODE_ID))),
+                                g,
+                                m,
                                 null,
                                 toNumber(getRequestParam(AttributeConst.RECORD_WIN)),
                                 toNumber(getRequestParam(AttributeConst.RECORD_LOSE)),
@@ -123,12 +131,20 @@ public class RecordAction extends ActionBase {
             Record r = service.getById(toNumber(getRequestParam(AttributeConst.RECORD_ID)));
             if(checkUser(r)) {
 
+                Game g = gameService.getById(toNumber(getRequestParam(AttributeConst.GAME_ID)));
+                Mode m = modeService.getById(toNumber(getRequestParam(AttributeConst.MODE_ID)));
+                if(g.getDeleteFlag() == JpaConst.GAME_DELETE_FLAG_TRUE ||
+                   m.getDeleteFlag() == JpaConst.MODE_DELETE_FLAG_TRUE) {
+                    forward(ForwardConst.FW_ERR_UNKNOWN);
+                    return;
+                }
+
                 Record update_r = new Record(
                         null,
                         toLocalDateTime(getRequestParam(AttributeConst.RECORD_DATETIME)),
                         null,
-                        gameService.getById(toNumber(getRequestParam(AttributeConst.GAME_ID))),
-                        modeService.getById(toNumber(getRequestParam(AttributeConst.MODE_ID))),
+                        g,
+                        m,
                         null,
                         toNumber(getRequestParam(AttributeConst.RECORD_WIN)),
                         toNumber(getRequestParam(AttributeConst.RECORD_LOSE)),
@@ -153,8 +169,14 @@ public class RecordAction extends ActionBase {
         if(checkToken()) {
 
             Record r = service.getById(toNumber(getRequestParam(AttributeConst.RECORD_ID)));
+            if(r == null) {
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+                return;
+            }
+
             if(checkUser(r)) {
                 service.destroy(r);
+                redirect(ForwardConst.ACT_USER, ForwardConst.CMD_MYPAGE);
             }
         }
     }

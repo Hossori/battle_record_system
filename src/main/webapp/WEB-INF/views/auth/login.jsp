@@ -10,12 +10,16 @@
     <c:param name="title">ログイン</c:param>
     <c:param name="content">
         <form method="POST" action="<c:url value='?action=${actAuth}&command=${commLogin}' />">
-            <label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label><br />
-            <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}"
-                                 value="${user_email}" placeholder="email@address.com"><br />
-
-            <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label><br />
-            <input type="password" name="${AttributeConst.USER_PASS.getValue()}"><br />
+            <div class="form-div">
+                <div class="user-email">
+                    <label for="${AttributeConst.USER_EMAIL.getValue()}">メールアドレス</label><br />
+                    <input type="email" name="${AttributeConst.USER_EMAIL.getValue()}" value="${user_email}" placeholder="email@address.com">
+                </div>
+                <div class="user-pass">
+                    <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label><br />
+                    <input type="password" name="${AttributeConst.USER_PASS.getValue()}">
+                </div>
+            </div>
 
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
 

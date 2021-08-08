@@ -63,22 +63,26 @@ public class UserAction extends ActionBase {
         List<Game> games = gameService.getAll();
 
         List<Record> records;
+        List<Record> all_records;
         List<Mode> modes;
         int page = getPage();
         int game_id = toNumber(getRequestParam(AttributeConst.GAME_ID));
         int mode_id = toNumber(getRequestParam(AttributeConst.MODE_ID));
         if(game_id <= 0) { //ゲームにつき未選択又は「全て」を選択
             records = recordService.getByUserPerPage(u, page);
+            all_records = recordService.getByUser(u);
             modes = null;
         } else {
             Game g = gameService.getById(game_id);
 
             if(mode_id <= 0) { //モードにつき未選択又は「全て」を選択
                 records = recordService.getByUserAndGamePerPage(u, g, page);
+                all_records = recordService.getByUserAndGame(u, g);
 
             } else { //ゲーム及びモードを選択済み
                 Mode m = modeService.getById(mode_id);
                 records = recordService.getByUserAndGameAndModePerPage(u, g, m, page);
+                all_records = recordService.getByUserAndGameAndMode(u, g, m);
 
             }
 
@@ -91,7 +95,11 @@ public class UserAction extends ActionBase {
             count = 0;
         }
 
-        Map<String, Object> total = getTotal(records);
+        int[] pagination = getPagination(count, page);
+        int page_begin = pagination[0];
+        int page_end = pagination[1];
+
+        Map<String, Object> total = getTotal(all_records);
 
         moveFlush();
 
@@ -105,6 +113,8 @@ public class UserAction extends ActionBase {
         setRequestParam(AttributeConst.GAME_ID_SELECTED, game_id);
         setRequestParam(AttributeConst.MODE_ID_SELECTED, mode_id);
         setRequestParam(AttributeConst.TOTAL, total);
+        setRequestParam(AttributeConst.PAGE_BEGIN, page_begin);
+        setRequestParam(AttributeConst.PAGE_END, page_end);
 
         forward(ForwardConst.FW_USER_MYPAGE);
     }
@@ -151,6 +161,7 @@ public class UserAction extends ActionBase {
         //エラーによる再表示の際に入力情報を引き継ぐ
         setRequestParam(AttributeConst.USER_EMAIL, getRequestParam(AttributeConst.USER_EMAIL));
         setRequestParam(AttributeConst.USER_NAME, getRequestParam(AttributeConst.USER_NAME));
+        setRequestParam(AttributeConst.USER_REPASS, getRequestParam(AttributeConst.USER_REPASS));
 
         moveErrors();
 
@@ -162,9 +173,10 @@ public class UserAction extends ActionBase {
         String email = getRequestParam(AttributeConst.USER_EMAIL);
         String name = getRequestParam(AttributeConst.USER_NAME);
         String plainPass = getRequestParam(AttributeConst.USER_PASS);
+        String rePlainPass = getRequestParam(AttributeConst.USER_REPASS);
         String pepper = getContextParam(PropertyConst.PEPPER);
 
-        List<String> errors = UserValidator.validate(email, name, plainPass);
+        List<String> errors = UserValidator.validate(email, name, plainPass, rePlainPass);
         setSessionParam(AttributeConst.ERRORS, errors);
 
         if(0 < errors.size()) {
@@ -207,7 +219,9 @@ public class UserAction extends ActionBase {
             return;
         }
 
+        int record_count = recordService.getByUser(u).size();
         setRequestParam(AttributeConst.USER, u);
+        setRequestParam(AttributeConst.RECORD_COUNT, record_count);
 
         forward(ForwardConst.FW_USER_SHOW);
     }
@@ -219,6 +233,7 @@ public class UserAction extends ActionBase {
 
         setRequestParam(AttributeConst.USER, u);
         setRequestParam(AttributeConst.TOKEN, getTokenId());
+        setRequestParam(AttributeConst.USER_REPASS, getRequestParam(AttributeConst.USER_REPASS));
 
         moveErrors();
 
@@ -232,23 +247,28 @@ public class UserAction extends ActionBase {
             User loginUser = getSessionParam(AttributeConst.LOGIN_USER);
             User u = service.getById(loginUser.getId()); //更新用のEntityを取得する
             String email = getRequestParam(AttributeConst.USER_EMAIL);
-            String pass = getRequestParam(AttributeConst.USER_PASS);
+            String plainPass = getRequestParam(AttributeConst.USER_PASS);
+            String rePlainPass = getRequestParam(AttributeConst.USER_REPASS);
             if(email == null || email.equals("")) {email = null;}
-            if(pass == null || pass.equals("")) {pass = null;}
+            if(plainPass == null || plainPass.equals("")) {plainPass = null;}
+
             User update_u = new User(
                                 null,
                                 email,
                                 getRequestParam(AttributeConst.USER_NAME),
-                                pass,
+                                plainPass,
                                 getRequestParam(AttributeConst.USER_INTRODUCTION),
                                 null,
                                 null
                             );
-            List<String> errors = UserValidator.validate(update_u);
+            List<String> errors = UserValidator.validate(update_u, rePlainPass);
             if(0 < errors.size()) {
                 setSessionParam(AttributeConst.ERRORS, errors);
                 redirect(ForwardConst.ACT_USER, ForwardConst.CMD_EDIT);
             } else {
+                String pepper = getContextParam(PropertyConst.PEPPER);
+                update_u.setPassword(EncryptUtil.getPasswordEncrypt(plainPass, pepper));
+
                 service.update(u, update_u);
 
                 //セッションスコープのログインユーザーに更新後のEntityを入れる

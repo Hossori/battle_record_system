@@ -15,51 +15,77 @@
     <c:param name="content">
         <!-- ゲーム名の変更 -->
         <form name="update_game" method="POST" action="<c:url value='?action=${actGame}&command=${commUpd}' />">
-            <label for="${AttributeConst.GAME_NAME.getValue()}">ゲーム</label><br />
-            <input type="text" name="${AttributeConst.GAME_NAME.getValue()}" value="${game.name}">
+            <div class="form-div">
+                <div>
+                    <label for="${AttributeConst.GAME_NAME.getValue()}">ゲーム</label><br />
+                    <input type="text" name="${AttributeConst.GAME_NAME.getValue()}" value="${game.name}">
+                    <button type="submit">変更</button>
+                </div>
+            </div>
 
             <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
-
-            <button type="submit">変更</button>
         </form>
 
         <!-- ゲームの削除 -->
-        <a href="#" onclick="(function(){var name='destroy_game';confirmDestroy(name);})();">ゲームの削除</a>
-        <form name="destroy_game" method="POST" action="<c:url value='?action=${actGame}&command=${commDst}' />">
-            <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
-            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
-        </form>
+        <div class="form-div">
+            <div>
+               <a class="navigate" onclick="(function(){var name='destroy_game';confirmDestroy(name);})();">ゲームの削除</a>
+            </div>
+            <form name="destroy_game" method="POST" action="<c:url value='?action=${actGame}&command=${commDst}' />">
+                <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
+                <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
+            </form>
+        </div>
+
+        <br />
 
         <!-- モードの削除 -->
-        モード<br />
-        <c:forEach var="mode" items="${game.modeList}" varStatus="status">
-            <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
-                <c:out value="${mode.name}" />
-                <a href="#" onclick="(function(){var name='destroy_mode${status.count}';confirmDestroy(name);})();">削除</a>
-                <form name="destroy_mode${status.count}" method="POST" action="<c:url value='?action=${actMode}&command=${commDst}' />">
+        <div class="form-div">
+            <div>
+                <label>モード</label><br />
+                <c:forEach var="mode" items="${game.modeList}" varStatus="status">
+                    <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                        <form name="form_mode${status.count}" method="POST">
+                            <input type="text" name="${AttributeConst.MODE_NAME.getValue()}" value="<c:out value='${mode.name}' />">
+                            <button type="button" onclick="(function(){var name='form_mode${status.count}';modeUpdate(name);})();">変更</button>
+                            <button type="button" onclick="(function(){var name='form_mode${status.count}';confirmDestroy(name);})();">削除</button>
+
+                            <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
+                            <input type="hidden" name="${AttributeConst.MODE_ID.getValue()}" value="${mode.id}">
+                            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
+                        </form>
+                    </c:if>
+                </c:forEach>
+            </div>
+
+                <!-- モードの追加 -->
+            <div>
+                <form name="create_mode" method="POST" action="<c:url value='?action=${actMode}&command=${commCrt}' />">
+                    <input type="text" name="${AttributeConst.MODE_NAME.getValue()}">
+
                     <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
-                    <input type="hidden" name="${AttributeConst.MODE_ID.getValue()}" value="${mode.id}">
                     <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
+
+                    <button type="submit">追加</button>
                 </form>
-            </c:if>
-        </c:forEach>
+            </div>
 
-        <!-- モードの追加 -->
-        <form name="create_mode" method="POST" action="<c:url value='?action=${actMode}&command=${commCrt}' />">
-            <input type="text" name="${AttributeConst.MODE_NAME.getValue()}">
+            <br />
 
-            <input type="hidden" name="${AttributeConst.GAME_ID.getValue()}" value="${game.id}">
-            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}">
-
-            <button type="submit">追加</button>
-        </form>
-
-        <a href="<c:url value='?action=${actGame}&command=${commIdx}' />">一覧に戻る</a>
+            <div>
+                <a class="navigate" href="<c:url value='?action=${actGame}&command=${commIdx}' />">一覧に戻る</a>
+            </div>
+        </div>
 
         <script>
+        function modeUpdate(name) {
+            document.forms[name].action = "<c:url value='?action=${actMode}&command=${commUpd}' />";
+            document.forms[name].submit();
+        }
         function confirmDestroy(name) {
             if(confirm("削除してよろしいですか？")){
+                document.forms[name].action = "<c:url value='?action=${actMode}&command=${commDst}' />";
                 document.forms[name].submit();
             }
         }

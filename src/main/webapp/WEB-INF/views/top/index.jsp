@@ -15,33 +15,36 @@
     <c:param name="title">戦績一覧</c:param>
     <c:param name="content">
         <form method="POST" action="<c:url value='?action=${actTop}&command=${commIdx}' />">
-            <section class="form-list">
-                <label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label>
-                <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
-                    <option value=0 label="全て" />
-                    <c:forEach var="game" items="${games}">
-                        <c:if test="${game.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
-                            <option value="${game.id}" label="${game.name}" <c:if test='${game.id == game_id_selected}'>selected</c:if> />
-                        </c:if>
-                    </c:forEach>
-                </select>
-            </section>
+            <table class="form-table">
+                <tr class="form-list">
+                   <th><label for="${AttributeConst.GAME_ID.getValue()}">ゲーム</label></th>
+                   <td>
+                       <select id="game_list" name="${AttributeConst.GAME_ID.getValue()}">
+                           <option value=0 label="全て" />
+                           <c:forEach var="game" items="${games}">
+                               <c:if test="${game.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                                   <option value="${game.id}" label="${game.name}" <c:if test='${game.id == game_id_selected}'>selected</c:if> />
+                               </c:if>
+                           </c:forEach>
+                       </select>
+                   </td>
+                </tr>
+                <tr class="form-list">
+                    <th><label for="${AttributeConst.MODE_ID.getValue()}">モード</label></th>
+                    <td>
+                        <select id="mode_list" name="${AttributeConst.MODE_ID.getValue()}">
+                            <option value=0 label="全て" />
+                            <c:forEach var="mode" items="${modes}">
+                                <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
+                                    <option value="${mode.id}" label="${mode.name}" <c:if test='${mode.id == mode_id_selected}'>selected</c:if> />
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+            </table>
 
-            <section class="form-list">
-                <label for="${AttributeConst.MODE_ID.getValue()}">モード</label>
-                <select id="mode_list" name="${AttributeConst.MODE_ID.getValue()}">
-                    <option value=0 label="全て" />
-                    <c:forEach var="mode" items="${modes}">
-                        <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
-                            <option value="${mode.id}" label="${mode.name}" <c:if test='${mode.id == mode_id_selected}'>selected</c:if> />
-                        </c:if>
-                    </c:forEach>
-                </select>
-            </section>
-
-            <section class="form-button">
-                <p class="btn" onclick="document.forms[0].submit();">戦績表示</p>
-            </section>
+            <button type="submit">戦績表示</button>
         </form>
 
         <table class="record-table">
@@ -56,13 +59,13 @@
             <c:forEach var="record" items="${records}">
                 <fmt:parseDate value="${record.datetime}" pattern="yyyy-MM-dd'T'HH:mm" var="recordDate" type="date" />
                 <tr>
-                    <td class="record_date"><a href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">
+                    <td class="record_date"><a class="navigate" href="<c:url value='?action=${actRecord}&command=${commShow}&record_id=${record.id}' />">
                         <fmt:formatDate value="${recordDate}" pattern="yyyy/MM/dd" />
                     </a></td>
                     <td class="record_user">
                         <c:choose>
                             <c:when test="${record.user.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
-                                <a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${record.user.id}' />">
+                                <a class="navigate" href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${record.user.id}' />">
                                    <c:out value="${record.user.name}" />
                                 </a>
                             </c:when>
@@ -75,7 +78,10 @@
                     <td class="record_mode"><c:out value="${record.mode.name}" /></td>
                     <td class="record_win_rate"><fmt:formatNumber value="${record.winRate}" pattern="0.00" />%</td>
                     <td class="record_point">
-                        <c:if test="${record.point != null}"><c:out value="${record.point}" />pt</c:if>
+                        <c:choose>
+                            <c:when test="${record.point == null}">-</c:when>
+                            <c:otherwise><c:out value="${record.point}" />pt</c:otherwise>
+                        </c:choose>
                     </td>
                 </tr>
             </c:forEach>
@@ -83,6 +89,9 @@
 
         <div class="pagination">
             全 <c:out value="${record_count}" /> 件<br />
+            <c:if test="${1 < page}">
+                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${page-1}' />">前へ</a>
+            </c:if>
             <c:forEach var="i" begin="${page_begin}" end="${page_end}" step="1">
                 <c:choose>
                     <c:when test="${page == i}">
@@ -93,6 +102,9 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
+            <c:if test="${page < (record_count-1)/maxRow}">
+                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${page+1}' />">次へ</a>
+            </c:if>
         </div>
 
         <script type="text/javascript">

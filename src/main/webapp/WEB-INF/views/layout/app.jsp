@@ -71,6 +71,9 @@
                 <c:if test="${flush != null}">
                     <div id="flush"><c:out value='${flush}' /></div>
                 </c:if>
+
+                <br />
+
                 <c:if test="${errors != null}">
                     <div id="errors">
                         <c:forEach var="error" items="${errors}">

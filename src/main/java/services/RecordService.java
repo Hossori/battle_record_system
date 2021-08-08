@@ -110,4 +110,34 @@ public class RecordService extends ServiceBase {
                                   .setMaxResults(JpaConst.ROW_PER_PAGE)
                                   .getResultList();
     }
+
+    /*
+     * ユーザーの戦績を返却する
+     */
+    public List<Record> getByUser(User u) {
+        return em.createNamedQuery(JpaConst.Q_RECORD_GET_BY_USER, Record.class)
+                                  .setParameter(JpaConst.JPQL_PARAM_USER, u)
+                                  .getResultList();
+    }
+
+    /*
+     * 指定したユーザー・ゲームの戦績を返却する
+     */
+    public List<Record> getByUserAndGame(User u, Game g) {
+        return em.createNamedQuery(JpaConst.Q_RECORD_GET_BY_USER_AND_GAME, Record.class)
+                                  .setParameter(JpaConst.JPQL_PARAM_USER, u)
+                                  .setParameter(JpaConst.JPQL_PARAM_GAME, g)
+                                  .getResultList();
+    }
+
+    /*
+     * 指定したユーザー・ゲーム・モードの戦績を返却する
+     */
+    public List<Record> getByUserAndGameAndMode(User u, Game g, Mode m) {
+        return em.createNamedQuery(JpaConst.Q_RECORD_GET_BY_USER_AND_GAME_AND_MODE, Record.class)
+                                  .setParameter(JpaConst.JPQL_PARAM_USER, u)
+                                  .setParameter(JpaConst.JPQL_PARAM_GAME, g)
+                                  .setParameter(JpaConst.JPQL_PARAM_MODE, m)
+                                  .getResultList();
+    }
 }

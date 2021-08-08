@@ -15,6 +15,12 @@ public class ModeService extends ServiceBase {
         em.getTransaction().commit();
     }
 
+    public void update(Mode m, String modeName) {
+        em.getTransaction().begin();
+        m.setName(modeName);
+        em.getTransaction().commit();
+    }
+
     public void destroy(Mode m) {
         em.getTransaction().begin();
         m.setDeleteFlag(JpaConst.MODE_DELETE_FLAG_TRUE);

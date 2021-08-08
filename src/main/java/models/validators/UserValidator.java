@@ -21,10 +21,11 @@ public class UserValidator {
     }
 
     //新規登録
-    public static List<String> validate(String email, String name, String plainPass) {
+    public static List<String> validate(String email, String name, String plainPass, String rePlainPass) {
         List<String> errors = new ArrayList<>();
         service = new UserService();
 
+        validatePass(errors, plainPass, rePlainPass);
         validateEmail(errors, email, true);
         validateName(errors, name);
         validatePass(errors, plainPass);
@@ -33,9 +34,11 @@ public class UserValidator {
     }
 
     //ユーザー情報の更新
-    public static List<String> validate(User u) {
+    public static List<String> validate(User u, String rePlainPass) {
         List<String> errors = new ArrayList<>();
         service = new UserService();
+
+        validatePass(errors, u.getPassword(), rePlainPass);
 
         String email = u.getEmail();
         if(email != null && !email.equals("")) {
@@ -46,6 +49,13 @@ public class UserValidator {
         validateName(errors, name);
 
         return errors;
+    }
+
+    //パスワードの再入力チェック
+    private static void validatePass(List<String> errors, String plainPass, String rePlainPass) {
+        if(!plainPass.equals(rePlainPass)) {
+            errors.add(MessageConst.E_NO_MATCH_REPASS.getMessage());
+        }
     }
 
     //メアドの入力チェック
