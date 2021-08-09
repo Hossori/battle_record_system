@@ -266,8 +266,10 @@ public class UserAction extends ActionBase {
                 setSessionParam(AttributeConst.ERRORS, errors);
                 redirect(ForwardConst.ACT_USER, ForwardConst.CMD_EDIT);
             } else {
-                String pepper = getContextParam(PropertyConst.PEPPER);
-                update_u.setPassword(EncryptUtil.getPasswordEncrypt(plainPass, pepper));
+                if(plainPass != null) {
+                    String pepper = getContextParam(PropertyConst.PEPPER);
+                    update_u.setPassword(EncryptUtil.getPasswordEncrypt(plainPass, pepper));
+                }
 
                 service.update(u, update_u);
 
