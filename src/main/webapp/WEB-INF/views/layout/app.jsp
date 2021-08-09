@@ -56,7 +56,7 @@
                                     <li><a href="<c:url value='?action=${actUser}&command=${commEntry}' />">新規登録</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="#" onclick="confirmLogout();">ログアウト</a></li>
+                                    <li><a onclick="confirmLogout();">ログアウト</a></li>
                                     <li><a href="<c:url value='?action=${actUser}&command=${commShow}&user_id=${sessionScope.login_user.id}' />">
                                         <c:out value="${sessionScope.login_user.name}" />
                                     </a></li>

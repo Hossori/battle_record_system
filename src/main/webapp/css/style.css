@@ -39,6 +39,7 @@ nav.header-menu a {
     color:white;
     font-weight: bold;
     opacity: 0.8;
+    cursor: pointer;
 }
 
 nav.header-menu a:hover {
