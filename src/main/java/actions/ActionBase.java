@@ -241,7 +241,7 @@ public abstract class ActionBase {
 
     protected void moveErrors() {
         List<String> errors = getSessionParam(AttributeConst.ERRORS);
-        if(errors != null && 0 < errors.size()) {
+        if(errors != null) {
             setRequestParam(AttributeConst.ERRORS, errors);
             removeSessionParam(AttributeConst.ERRORS);
         }

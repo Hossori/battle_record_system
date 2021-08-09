@@ -177,12 +177,12 @@ public class UserAction extends ActionBase {
         String pepper = getContextParam(PropertyConst.PEPPER);
 
         List<String> errors = UserValidator.validate(email, name, plainPass, rePlainPass);
-        setSessionParam(AttributeConst.ERRORS, errors);
 
         if(0 < errors.size()) {
             //forwardで入力情報を引き継ぐ
             setRequestParam(AttributeConst.USER_EMAIL, email);
             setRequestParam(AttributeConst.USER_NAME, name);
+            setSessionParam(AttributeConst.ERRORS, errors);
             forward(ForwardConst.ACT_USER, ForwardConst.CMD_ENTRY);
 
             return;
