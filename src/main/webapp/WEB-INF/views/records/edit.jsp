@@ -14,21 +14,21 @@
     <c:param name="content">
         <form method="POST">
             <c:import url="/WEB-INF/views/forms/battle_record_form.jsp" />
-            <button type="submit" onclick="(function(){var cmd='${commUpd}';submit(cmd);})();">登録</button>
-            <button type="submit" onclick="(function(){var cmd='${commDst}';submit(cmd);})();">削除</button>
+            <input type="hidden" name="${AttributeConst.RECORD_ID.getValue()}" value="${record.id}">
+            <button type="button" onclick="update();">登録</button>
+            <button type="button" onclick="destroy();">削除</button>
         </form>
 
         <script>
-            function submit(cmd) {
-                if(cmd == "destroy") {
-                    if(confirm("削除してよろしいですか？")) {
-                        document.forms[0].action = "<c:url value='?action=${actRecord}&command="+cmd+"&record_id=${record.id}' />";
-                        document.forms[0].submit();
-                    }
-                } else {
-                    document.forms[0].action = "<c:url value='?action=${actRecord}&command="+cmd+"&record_id=${record.id}' />";
+            function destroy() {
+                if(confirm("削除してよろしいですか？")) {
+                    document.forms[0].action = "<c:url value='?action=${actRecord}&command=destroy&record_id=${record.id}' />";
                     document.forms[0].submit();
                 }
+            }
+            function update() {
+                document.forms[0].action = "<c:url value='?action=${actRecord}&command=update&record_id=${record.id}' />";
+                document.forms[0].submit();
             }
         </script>
     </c:param>
