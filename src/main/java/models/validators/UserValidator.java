@@ -38,7 +38,11 @@ public class UserValidator {
         List<String> errors = new ArrayList<>();
         service = new UserService();
 
-        validatePass(errors, u.getPassword(), rePlainPass);
+        String plainPass = u.getPassword();
+        if(!((plainPass == null || plainPass.equals(""))
+                && (rePlainPass == null || rePlainPass.equals("")))) {
+            validatePass(errors, plainPass, rePlainPass);
+        }
 
         String email = u.getEmail();
         if(email != null && !email.equals("")) {
