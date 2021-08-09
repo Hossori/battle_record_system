@@ -90,7 +90,7 @@
         <div class="pagination">
             全 <c:out value="${record_count}" /> 件<br />
             <c:if test="${1 < page}">
-                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${page-1}' />">前へ</a>
+                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${page-1}&game_id=${game_id_selected}&mode_id=${mode_id_selected}' />">前へ</a>
             </c:if>
             <c:forEach var="i" begin="${page_begin}" end="${page_end}" step="1">
                 <c:choose>
@@ -98,12 +98,12 @@
                         <c:out value="${i}" />
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>
+                        <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}&game_id=${game_id_selected}&mode_id=${mode_id_selected}' />"><c:out value="${i}" /></a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-            <c:if test="${page < (record_count-1)/maxRow}">
-                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${page+1}' />">次へ</a>
+            <c:if test="${page < Math.floor((record_count-1)/maxRow)+1}">
+                <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${page+1}&game_id=${game_id_selected}&mode_id=${mode_id_selected}' />">次へ</a>
             </c:if>
         </div>
 

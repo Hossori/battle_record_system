@@ -71,7 +71,7 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-            <c:if test="${page < (game_count-1)/maxRow}">
+            <c:if test="${page < Math.floor((game_count-1)/maxRow)+1}">
                 <a href="<c:url value='?action=${actGame}&command=${commIdx}&page=${page+1}' />">次へ</a>
             </c:if>
         </div>

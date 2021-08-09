@@ -125,7 +125,7 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-            <c:if test="${page < (record_count-1)/maxRow}">
+            <c:if test="${page < Math.floor((record_count-1)/maxRow)+1}">
                 <a href="<c:url value='?action=${actRecord}&command=${commMypage}&page=${page+1}' />">次へ</a>
             </c:if>
         </div>

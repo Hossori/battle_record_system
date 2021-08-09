@@ -111,6 +111,35 @@ public class RecordService extends ServiceBase {
                                   .getResultList();
     }
 
+    //pageなし
+
+    /*
+     * 戦績を返却する
+     */
+    public List<Record> getAll() {
+        return em.createNamedQuery(JpaConst.Q_RECORD_GET_ALL, Record.class)
+                                  .getResultList();
+    }
+
+    /*
+     * 指定したゲームの戦績を返却する
+     */
+    public List<Record> getByGame(Game g) {
+        return em.createNamedQuery(JpaConst.Q_RECORD_GET_BY_GAME, Record.class)
+                                  .setParameter(JpaConst.JPQL_PARAM_GAME, g)
+                                  .getResultList();
+    }
+
+    /*
+     * 指定したゲーム・モードの戦績を返却する
+     */
+    public List<Record> getByGameAndMode(Game g, Mode m) {
+        return em.createNamedQuery(JpaConst.Q_RECORD_GET_BY_GAME_AND_MODE, Record.class)
+                                  .setParameter(JpaConst.JPQL_PARAM_GAME, g)
+                                  .setParameter(JpaConst.JPQL_PARAM_MODE, m)
+                                  .getResultList();
+    }
+
     /*
      * ユーザーの戦績を返却する
      */

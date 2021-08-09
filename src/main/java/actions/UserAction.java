@@ -88,14 +88,15 @@ public class UserAction extends ActionBase {
 
             modes = g.getModeList();
         }
-        int count;
-        if(records != null) {
-            count = records.size();
+
+        int all_count;
+        if(all_records != null) {
+            all_count = all_records.size();
         } else {
-            count = 0;
+            all_count = 0;
         }
 
-        int[] pagination = getPagination(count, page);
+        int[] pagination = getPagination(all_count, page);
         int page_begin = pagination[0];
         int page_end = pagination[1];
 
@@ -105,7 +106,7 @@ public class UserAction extends ActionBase {
 
         setRequestParam(AttributeConst.USER, u);
         setRequestParam(AttributeConst.RECORDS, records);
-        setRequestParam(AttributeConst.RECORD_COUNT, count);
+        setRequestParam(AttributeConst.RECORD_COUNT, all_count);
         setRequestParam(AttributeConst.PAGE, page);
         setRequestParam(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);
         setRequestParam(AttributeConst.GAMES, games);

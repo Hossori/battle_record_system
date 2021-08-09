@@ -43,31 +43,29 @@ public class TopAction extends ActionBase {
         int page = getPage();
 
         List<Record> records;
+        List<Record> all_records;
         List<Mode> modes;
         int game_id = toNumber(getRequestParam(AttributeConst.GAME_ID));
         int mode_id = toNumber(getRequestParam(AttributeConst.MODE_ID));
         if(game_id <= 0) { //ゲームにつき未選択又は「全て」を選択
             records = recordService.getPerPage(page);
+            all_records = recordService.getAll();
             modes = null;
         } else {
             Game g = gameService.getById(game_id);
 
             if(mode_id <= 0) { //モードにつき未選択又は「全て」を選択
                 records = recordService.getByGamePerPage(g, page);
+                all_records = recordService.getByGame(g);
 
             } else { //ゲーム及びモードを選択済み
                 Mode m = modeService.getById(mode_id);
                 records = recordService.getByGameAndModePerPage(g, m, page);
+                all_records = recordService.getByGameAndMode(g, m);
 
             }
 
             modes = g.getModeList();
-        }
-        int count;
-        if(records != null) {
-            count = records.size();
-        } else {
-            count = 0;
         }
 
         moveFlush();
@@ -75,14 +73,21 @@ public class TopAction extends ActionBase {
 
         List<Game> games = gameService.getAll();
 
-        int[] pagination = getPagination(count, page);
+        int all_count;
+        if(all_records != null) {
+            all_count = all_records.size();
+        } else {
+            all_count = 0;
+        }
+
+        int[] pagination = getPagination(all_count, page);
         int page_begin = pagination[0];
         int page_end = pagination[1];
 
         setRequestParam(AttributeConst.GAMES, games);
         setRequestParam(AttributeConst.MODES, modes);
         setRequestParam(AttributeConst.RECORDS, records);
-        setRequestParam(AttributeConst.RECORD_COUNT, count);
+        setRequestParam(AttributeConst.RECORD_COUNT, all_count);
         setRequestParam(AttributeConst.PAGE, page);
         setRequestParam(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);
         setRequestParam(AttributeConst.GAME_ID_SELECTED, game_id);
