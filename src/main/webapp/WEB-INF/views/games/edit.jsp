@@ -46,7 +46,7 @@
                 <label>モード</label><br />
                 <c:forEach var="mode" items="${game.modeList}" varStatus="status">
                     <c:if test="${mode.deleteFlag == AttributeConst.DELETE_FALSE.getIntegerValue()}">
-                        <form name="form_mode${status.count}" method="POST">
+                        <form name="form_mode${status.count}" method="POST" action="<c:url value='?action=${actMode}&command=${commDst}' />">
                             <input type="text" name="${AttributeConst.MODE_NAME.getValue()}" value="<c:out value='${mode.name}' />">
                             <button type="button" onclick="(function(){var name='form_mode${status.count}';modeUpdate(name);})();">変更</button>
                             <button type="button" onclick="(function(){var name='form_mode${status.count}';confirmDestroy(name);})();">削除</button>
@@ -85,7 +85,6 @@
         }
         function confirmDestroy(name) {
             if(confirm("削除してよろしいですか？")){
-                document.forms[name].action = "<c:url value='?action=${actMode}&command=${commDst}' />";
                 document.forms[name].submit();
             }
         }
